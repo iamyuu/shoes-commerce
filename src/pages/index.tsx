@@ -1,10 +1,11 @@
 import { NextPage } from 'next'
-import { Page } from 'components/layouts'
+import { Page, PageHeader } from 'components/layouts'
+import { ShoesList } from 'components/shoes'
 
 const Home: NextPage = () => (
   <Page>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit, ullam! Natus aliquid dolore illo inventore, cum nesciunt cupiditate
-    laborum sit accusamus soluta nemo ducimus repudiandae maxime labore quae architecto dolor!
+    <PageHeader>New Release</PageHeader>
+    <ShoesList />
   </Page>
 )
 
