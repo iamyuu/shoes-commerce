@@ -12,7 +12,14 @@ const fonts = {
   }
 }
 
+const colors = {
+  brand: {
+    black: '#131212'
+  }
+}
+
 export default extendTheme({
   config,
-  fonts
+  fonts,
+  colors
 })
