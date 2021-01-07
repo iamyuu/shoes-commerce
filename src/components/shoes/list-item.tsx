@@ -1,9 +1,8 @@
 import * as React from 'react'
-import useSWR from 'swr'
 import { useTheme, Box, Text, AspectRatio, Image, SimpleGrid, Skeleton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
+import { useAllShoes, Shoes } from 'services/shoes'
 import { formatCurrency, slugify } from 'utils/misc'
-import { Shoes } from './types'
 
 function ShoesListFallback() {
   return (
@@ -55,9 +54,9 @@ function ShoesListItem(props: Shoes) {
 }
 
 export function ShoesList() {
-  const { data: allShoes } = useSWR<Shoes[]>('/shoes')
+  const { allShoes, loading } = useAllShoes()
 
-  if (!allShoes) {
+  if (loading) {
     return <ShoesListFallback />
   }
 

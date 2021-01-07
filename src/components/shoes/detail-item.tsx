@@ -1,5 +1,4 @@
 import * as React from 'react'
-import useSWR from 'swr'
 import {
   useToast,
   useDisclosure,
@@ -24,8 +23,8 @@ import {
 } from '@chakra-ui/react'
 import { Radio, RadioButton } from 'components/ui/radio'
 import { PlayIcon, DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
-import { formatCurrency, slugify } from 'utils/misc'
-import { Shoes, Color } from './types'
+import { formatCurrency } from 'utils/misc'
+import { useSingleShoes, Color } from 'services/shoes'
 
 interface ShoesDetailProps {
   slug: string
@@ -43,16 +42,6 @@ interface ChooseColorProps {
 interface ButtonSubmitProps {
   price: number
   isLoading?: boolean
-}
-
-function useSingleShoes(slug: string) {
-  const { data, ...result } = useSWR<Shoes[]>('/shoes')
-  const filterShoes = data?.filter(val => slugify(val.name) === slug)
-  const hasShoes = Array.isArray(filterShoes) && filterShoes.length > 0
-  const error = !hasShoes ? new Error('Shoes not found') : result.error
-  const shoes: Shoes = hasShoes ? filterShoes[0] : ({} as Shoes)
-
-  return { ...result, error, data: shoes, shoes: shoes || null }
 }
 
 function PlayVideo(props: PlayVideoProps) {
@@ -128,9 +117,8 @@ function ButtonSubmit(props: ButtonSubmitProps) {
 }
 
 export function ShoesDetail(props: ShoesDetailProps) {
+  const { shoes, loading } = useSingleShoes(props.slug)
   const toast = useToast({ duration: 5000, isClosable: true })
-  const { shoes } = useSingleShoes(props.slug)
-  const isLoading = !shoes || !shoes.sizes || !shoes.colors
 
   function handleAddToBag(event) {
     event.preventDefault()
@@ -168,13 +156,13 @@ export function ShoesDetail(props: ShoesDetailProps) {
     <form onSubmit={handleAddToBag} noValidate>
       <Flex direction={['column', null, null, 'row']}>
         <Box>
-          <Skeleton isLoaded={!isLoading}>
+          <Skeleton isLoaded={!loading}>
             <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" mx={['auto', null, null, 0]} />
           </Skeleton>
 
           <SimpleGrid minChildWidth={['50px', '100px']} spacing="20px" mt={[null, null, '40px', '20px']} mb="40px">
             {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} isLoaded={!isLoading}>
+              <Skeleton key={i} isLoaded={!loading}>
                 <AspectRatio ratio={4 / 3}>
                   <Image src={`/images/shoes/image-detail-${i + 1}.jpg`} alt={`${shoes.name} image ${i}`} />
                 </AspectRatio>
@@ -191,19 +179,19 @@ export function ShoesDetail(props: ShoesDetailProps) {
           w="50%"
           maxW="640px"
         >
-          <Skeleton isLoaded={!isLoading} w="25%">
+          <Skeleton isLoaded={!loading} w="25%">
             <Text aria-label="shoes category" as="small" fontSize="16px">
               {shoes.category}
             </Text>
           </Skeleton>
 
-          <Skeleton isLoaded={!isLoading} my={2}>
+          <Skeleton isLoaded={!loading} my={2}>
             <Heading aria-label="shoes name" as="h1" fontWeight="bold" fontSize="50px">
               {shoes.name}
             </Heading>
           </Skeleton>
 
-          {isLoading ? (
+          {loading ? (
             <>
               <Skeleton h="18px" mb={2} />
               <Skeleton h="18px" w="80%" />
@@ -215,14 +203,14 @@ export function ShoesDetail(props: ShoesDetailProps) {
           )}
 
           <Box mt="20px" mb="38px">
-            <PlayVideo title={shoes.name} source={isLoading ? null : shoes.video} />
+            <PlayVideo title={shoes.name} source={loading ? null : shoes.video} />
           </Box>
 
           <Text color="brand.black" fontSize="18px" mb="20px">
             Select Size (US)
           </Text>
 
-          {isLoading ? (
+          {loading ? (
             <Flex direction="row">
               {[...Array(3)].map((_, i) => (
                 <Skeleton key={i} mx={1} w="50px" h="50px" />
@@ -236,7 +224,7 @@ export function ShoesDetail(props: ShoesDetailProps) {
             Select Color
           </Text>
 
-          {isLoading ? (
+          {loading ? (
             <Flex direction="row">
               {[...Array(3)].map((_, i) => (
                 <SkeletonCircle key={i} mx={1} size="12" />
@@ -256,7 +244,7 @@ export function ShoesDetail(props: ShoesDetailProps) {
           </Text>
         </Box>
 
-        <ButtonSubmit isLoading={isLoading} price={shoes.price} />
+        <ButtonSubmit isLoading={loading} price={shoes.price} />
       </Flex>
     </form>
   )
