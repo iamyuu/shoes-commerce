@@ -9,7 +9,7 @@ const Detail: NextPage = () => {
 
   return (
     <Page>
-      <Box pt={10}>
+      <Box pt={[0, '2.5rem']}>
         <ShoesDetail slug={router.query.slug as string} />
       </Box>
     </Page>

@@ -57,7 +57,7 @@ export function RadioButton(props: RadioButtonProps) {
   return (
     <Flex flexWrap="wrap" {...getRootProps()}>
       {props.options.map(optionValue => (
-        <Radio key={optionValue} id={name} {...rest} {...getRadioProps({ value: optionValue })}>
+        <Radio key={optionValue} name={name} {...rest} {...getRadioProps({ value: optionValue })}>
           {optionValue}
         </Radio>
       ))}
