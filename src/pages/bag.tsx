@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import { Box, Flex, Text, Button, useToast } from '@chakra-ui/react'
 import { BagTable, Total } from 'components/bag'
 import { Page, PageHeader } from 'components/layouts'
@@ -49,6 +50,8 @@ const BagPage: NextPage = () => {
 
   return (
     <Page>
+      <NextSeo title="Your Bag" />
+
       <PageHeader>
         Your Bag
         <BagIconWithBadge />

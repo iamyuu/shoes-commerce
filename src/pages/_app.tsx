@@ -1,3 +1,4 @@
+import { DefaultSeo } from 'next-seo'
 import { SWRConfig } from 'swr'
 import { Provider } from 'react-redux'
 import { ChakraProvider } from '@chakra-ui/react'
@@ -21,9 +22,13 @@ export const AllProvider: React.FC = ({ children }) => (
   </Provider>
 )
 
-export default function CustomApp({ Component, pageProps }: AppProps) {
+export default function CustomApp({ Component, pageProps, router }: AppProps) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || ''
+
   return (
     <AllProvider>
+      <DefaultSeo title="Shoes Commerce" canonical={baseUrl + router.asPath || ''} />
+
       <Component {...pageProps} />
     </AllProvider>
   )
