@@ -17,6 +17,7 @@ import {
   CloseButton,
   useToast
 } from '@chakra-ui/react'
+import { NextChakraLink } from 'components/helpers'
 import { Page, PageHeader } from 'components/layouts'
 import { BagIcon, ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
@@ -51,7 +52,7 @@ const dummyItems = [
 const countTotal = (items: typeof dummyItems) => items.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
 
 const Bag: NextPage = () => {
-  const toast = useToast({ duration: 3000 })
+  const toast = useToast()
   // TODO: get from storage
   const [items, setItems] = React.useState(() => dummyItems)
 
@@ -70,9 +71,9 @@ const Bag: NextPage = () => {
     setItems(updatedItems)
   }
 
-  // TODO:
   const handlePay = () => {
     toast({
+      duration: 3000,
       status: 'info',
       description: 'This feature not available yet'
     })
@@ -81,7 +82,7 @@ const Bag: NextPage = () => {
   return (
     <Page>
       <PageHeader>
-        <Text as="span">Your Bag</Text>
+        Your Bag
         <Box d="inline" ml={4} position="relative">
           <BagIcon />
           <Box
@@ -105,14 +106,20 @@ const Bag: NextPage = () => {
 
       <Box overflowX="auto">
         <Table variant="simple">
-          <Thead bg="#F6F6F6">
+          <Thead bg="brand.gray">
             <Tr>
-              <Th w="60%" textAlign="center">
+              <Th fontWeight={500} minW="15rem" textAlign="center">
                 Product
               </Th>
-              <Th>Price</Th>
-              <Th w={4}>Quantity</Th>
-              <Th>Total</Th>
+              <Th fontWeight={500} w="10%">
+                Price
+              </Th>
+              <Th fontWeight={500} w="10%">
+                Quantity
+              </Th>
+              <Th fontWeight={500} w="10%">
+                Total
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -120,53 +127,58 @@ const Bag: NextPage = () => {
               items.map((item, i) => (
                 <Tr key={i}>
                   <Td>
-                    <Flex>
-                      <Flex alignItems="center" mr={2}>
+                    <Flex fontSize="16px">
+                      <Flex alignItems="center" mr={[0, null, 8, 12]}>
                         <CloseButton
                           size="sm"
                           borderRadius="50%"
                           bg="black"
                           color="white"
-                          _hover={{ color: 'black', bg: '#F6F6F6' }}
+                          _hover={{ color: 'black', bg: 'brand.gray' }}
                           onClick={() => handleRemoveItem(i)}
                         />
                       </Flex>
 
-                      <Image src={item.image} alt={item.name} w={16} h={16} d={['none', 'initial']} />
+                      <Image src={item.image} alt={item.name} w="150px" h="150px" d={['none', null, 'initial']} />
 
-                      <Flex flexDirection="column" justifyContent="center" ml={2}>
-                        <Text as="span" fontWeight="600">
+                      <Flex flexDirection="column" justifyContent="center" alignItems="center" ml={2}>
+                        <Text as="span" fontWeight={600}>
                           {item.name}
                         </Text>
-                        <Flex>
-                          <Text as="span">Size {item.selectedSize}</Text>
-                          <Text as="span" ml={1}>
+                        <Flex flexDirection={['column', 'row']} w="full">
+                          <Text as="span">Size: {item.selectedSize}</Text>
+                          <Text as="span" ml={[0, '20px']}>
                             Color
-                            <Box display="inline-block" w={3} h={3} ml={1} bg={item.selectedColor} />
+                            <Box display="inline-block" w={3} h={3} ml="10px" bg={item.selectedColor} />
                           </Text>
                         </Flex>
                       </Flex>
                     </Flex>
                   </Td>
-                  <Td>{formatCurrency.format(item.price)}</Td>
-                  <Td>
+                  <Td fontSize="18px" fontWeight={400}>
+                    {formatCurrency.format(item.price)}
+                  </Td>
+                  <Td fontSize="18px">
                     <NumberInput
                       defaultValue={item.quantity}
                       min={1}
-                      bg="#F6F6F6"
-                      borderColor="#F6F6F6"
+                      bg="brand.gray"
+                      borderColor="brand.gray"
                       onChange={value => handleChangeQuantity(value, i)}
                     >
                       <NumberInputField />
                     </NumberInput>
                   </Td>
-                  <Td>{formatCurrency.format(item.price * item.quantity)}</Td>
+                  <Td fontSize="18px">{formatCurrency.format(item.price * item.quantity)}</Td>
                 </Tr>
               ))
             ) : (
               <Tr>
                 <Td colSpan={4} textAlign="center">
-                  Your bag is empty
+                  Your bag is empty. Check the {` `}
+                  <NextChakraLink href="/" fontWeight={500}>
+                    available shoes
+                  </NextChakraLink>
                 </Td>
               </Tr>
             )}
@@ -175,22 +187,14 @@ const Bag: NextPage = () => {
       </Box>
 
       <Flex mt={8} flexDirection="column" alignItems="flex-end">
-        <Flex justifyContent="space-between" w={['100%', '45%']} p={4} bg="#F6F6F6">
+        <Flex justifyContent="space-between" w={['100%', '40%']} p={4} mb={['10px', '20px']} bg="brand.gray">
           <Text as="span" textTransform="uppercase">
             Total
           </Text>
           <Text as="span">{formatCurrency.format(countTotal(items))}</Text>
         </Flex>
 
-        <Button
-          justifyContent="space-between"
-          w={['100%', '45%']}
-          bg="black"
-          color="white"
-          _hover={{ color: 'black', bg: '#F6F6F6' }}
-          isDisabled={items.length < 1}
-          onClick={handlePay}
-        >
+        <Button justifyContent="space-between" w={['100%', '40%']} isDisabled={items.length < 1} onClick={handlePay}>
           <Text as="span" textTransform="uppercase">
             Pay Now
           </Text>
