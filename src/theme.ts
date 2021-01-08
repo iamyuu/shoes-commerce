@@ -14,12 +14,41 @@ const fonts = {
 
 const colors = {
   brand: {
-    black: '#131212'
+    black: '#131212',
+    gray: '#f6f6f6'
   }
+}
+
+const ButtonComponents = {
+  baseStyle: {
+    fontWeight: 600,
+    fontSize: '16px',
+    textTransform: 'uppercase'
+  },
+  variants: {
+    black: () => {
+      const hoverColor = { color: 'black', bg: 'brand.gray' }
+
+      return {
+        bg: 'black',
+        color: 'white',
+        _hover: hoverColor,
+        _focus: hoverColor
+      }
+    }
+  },
+  defaultProps: {
+    variant: 'black'
+  }
+}
+
+const components = {
+  Button: ButtonComponents
 }
 
 export default extendTheme({
   config,
   fonts,
-  colors
+  colors,
+  components
 })
