@@ -27,11 +27,12 @@ function ShoesListFallback() {
 
 function ShoesListItem(props: Shoes) {
   const theme = useTheme()
+  const slug = slugify(props.name)
   const randomNumber = Math.floor(Math.random() * 8 + 1)
 
   return (
-    <NextChakraLink href={slugify(props.name)} _hover={{ textTransform: 'none' }}>
-      <AspectRatio maxWidth="400px" height="350px" maxHeight="400px" ratio={4 / 3}>
+    <NextChakraLink href={slug} _hover={{ textTransform: 'none' }}>
+      <AspectRatio maxWidth="full" height="350px" maxHeight="400px" ratio={4 / 3}>
         <Image src={`/images/shoes/image-${randomNumber}.jpg`} alt={props.name} />
       </AspectRatio>
 
