@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useDispatch } from 'react-redux'
 import {
   useToast,
   useDisclosure,
@@ -27,6 +28,7 @@ import { Radio, RadioButton } from 'components/ui/radio'
 import { PlayIcon, DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
 import { useSingleShoes, Color } from 'services/shoes'
+import { addOrUpdate } from 'store/bag'
 
 interface ShoesDetailProps {
   slug: string
@@ -94,6 +96,7 @@ function ChooseColor(props: ChooseColorProps) {
 
 export function ShoesDetail(props: ShoesDetailProps) {
   const theme = useTheme()
+  const dispatch = useDispatch()
   const { shoes, loading } = useSingleShoes(props.slug)
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
   const [isDesktop] = useMediaQuery(`(min-width: ${theme.breakpoints.lg}`)
@@ -113,6 +116,15 @@ export function ShoesDetail(props: ShoesDetailProps) {
 
       return
     }
+
+    const newItem = {
+      ...shoes,
+      quantity: 1,
+      selectedSize: chooseSize.value,
+      selectedColor: chooseColor.value
+    }
+
+    dispatch(addOrUpdate({ newItem }))
 
     toast({
       status: 'success',

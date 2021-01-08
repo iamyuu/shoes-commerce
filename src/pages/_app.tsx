@@ -1,7 +1,9 @@
 import { SWRConfig } from 'swr'
+import { Provider } from 'react-redux'
 import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
 import client from 'utils/api-client'
+import store from 'store'
 import theme from 'theme'
 import 'typeface-poppins'
 
@@ -10,11 +12,13 @@ const swrConfig = {
 }
 
 export const AllProvider: React.FC = ({ children }) => (
-  <SWRConfig value={swrConfig}>
-    <ChakraProvider resetCSS theme={theme}>
-      {children}
-    </ChakraProvider>
-  </SWRConfig>
+  <Provider store={store}>
+    <SWRConfig value={swrConfig}>
+      <ChakraProvider resetCSS theme={theme}>
+        {children}
+      </ChakraProvider>
+    </SWRConfig>
+  </Provider>
 )
 
 export default function CustomApp({ Component, pageProps }: AppProps) {
