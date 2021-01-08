@@ -13,7 +13,6 @@ const bagSlice = createSlice({
     addOrUpdate: (state, action: PayloadAction<AddOrUpdateAction>) => {
       const { newItem } = action.payload
       const getIndex = state.items.findIndex(val => val.name === newItem.name)
-      console.log(`TCL ~ file: slice.ts ~ line 16 ~ getIndex`, getIndex)
 
       if (getIndex !== -1) {
         const getItem = state.items[getIndex]
