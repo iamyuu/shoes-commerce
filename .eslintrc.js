@@ -34,7 +34,10 @@ module.exports = {
     {
       files: ['.eslintrc.js', '*.config.js'],
       parserOptions: { sourceType: 'script' },
-      env: { node: true }
+      env: {
+        node: true,
+        jest: true
+      }
     }
   ]
 }
