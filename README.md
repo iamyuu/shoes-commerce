@@ -1,11 +1,20 @@
-# NextJS Typescript Boilerplate
+# Shoes Commerce
 
-Bootstrap a developer-friendly NextJS app configured with:
+Demo url: [shoes-commerce.iamyuu.vercel.app](https://shoes-commerce.iamyuu.vercel.app)
 
-- [SWR](https://swr.vercel.app)
-- [Chakra UI](http://chakra-ui.com)
-- [Typescript](https://www.typescriptlang.org)
-- Linting with [ESLint](https://eslint.org)
-- Formatting with [Prettier](https://prettier.io)
-- Linting, typechecking and formatting on by default using [`husky`](https://github.com/typicode/husky) for commit hooks
-- Testing with [Jest](https://jestjs.io) and [`react-testing-library`](https://testing-library.com/docs/react-testing-library/intro)
+## Libraries
+
+- [SWR](https://swr.vercel.app) for data fetching
+- [Redux](http://redux.js.org) for state management
+- [Chakra UI](https://chakra-ui.com) for looks and feel in general
+
+## Prerequisite
+
+- Node.js v12.0.0 or higher
+
+## Available Scripts
+
+In the project directory, you can run:
+
+- `yarn dev`: Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
