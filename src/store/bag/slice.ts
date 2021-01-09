@@ -34,7 +34,7 @@ const bagSlice = createSlice({
 
       updatedBagItems[index] = {
         ...updatedBagItems[index],
-        quantity: parseInt(newQuantity, 10)
+        quantity: parseInt(newQuantity, 10) || 1
       }
 
       state.items = updatedBagItems
