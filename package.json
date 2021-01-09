@@ -37,7 +37,7 @@
     "next-seo": "4.17.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-error-boundaries": "1.1.4",
+    "react-error-boundary": "3.1.0",
     "react-redux": "7.2.2",
     "swr": "0.3.11",
     "typeface-poppins": "1.1.13"

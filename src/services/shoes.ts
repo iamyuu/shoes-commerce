@@ -18,7 +18,7 @@ export interface Color {
 }
 
 export function useAllShoes() {
-  const { data, ...result } = useSWR<Shoes[]>('/shoes')
+  const { data, ...result } = useSWR<Shoes[], Error>('/shoes')
 
   return {
     ...result,
@@ -32,7 +32,7 @@ export function useSingleShoes(slug: string) {
   const filteredShoes = allShoes?.filter(val => slugify(val.name) === slug)
   const hasShoes = Array.isArray(filteredShoes) && filteredShoes.length > 0
 
-  const error = !hasShoes ? new Error('Shoes not found') : result.error
+  const error = result.error || !hasShoes ? new Error('Shoes not found') : null
   const shoes: Shoes = hasShoes ? filteredShoes[0] : ({} as Shoes)
   const loading = !shoes || !shoes.sizes || !shoes.colors
 

@@ -55,7 +55,11 @@ function ShoesListItem(props: Shoes) {
 }
 
 export function ShoesList() {
-  const { allShoes, loading } = useAllShoes()
+  const { allShoes, loading, error } = useAllShoes()
+
+  if (error) {
+    throw error
+  }
 
   if (loading) {
     return <ShoesListFallback />
