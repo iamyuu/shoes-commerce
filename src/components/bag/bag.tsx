@@ -97,8 +97,6 @@ function BagTablebody() {
     )
   }
 
-  const randomNumber = Math.floor(Math.random() * 8 + 1)
-
   return (
     <Tbody>
       {items.map((item, i) => (
@@ -116,7 +114,7 @@ function BagTablebody() {
                 />
               </Flex>
 
-              <Image w="150px" h="150px" d={['none', null, 'initial']} alt={item.name} src={`/images/shoes/image-${randomNumber}.jpg`} />
+              <Image w="150px" h="150px" d={['none', null, 'initial']} alt={item.name} src={`/images/shoes/image-5.jpg`} bg="brand.gray" />
 
               <NextChakraLink
                 href={slugify(item.name)}

@@ -150,7 +150,7 @@ export function ShoesDetail(props: ShoesDetailProps) {
             {isDesktop ? (
               <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" />
             ) : (
-              <AspectRatio ratio={4 / 3}>
+              <AspectRatio ratio={4 / 3} bg="brand.gray">
                 <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" />
               </AspectRatio>
             )}
