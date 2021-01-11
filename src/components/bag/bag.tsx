@@ -2,15 +2,46 @@ import * as React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Flex, Text, Table, Thead, Tbody, Tr, Th, Td, Image, NumberInput, NumberInputField, CloseButton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
+import { BagIcon } from 'components/icons'
 import { formatCurrency, slugify } from 'utils/misc'
-import { remove, setQuantity, selectBagItems, selectBagTotal } from 'store/bag'
+import { remove, setQuantity, selectBagItems, selectBagCount, selectBagTotal } from 'store/bag'
 
 interface InputQuantityProps {
   index: number
   defaultValue: string
 }
 
-export function Total() {
+export function BagIconWithBadge({ isNavigation = false }) {
+  const count = useSelector(selectBagCount)
+
+  return (
+    <Box display="inline" position="relative" ml={isNavigation ? 0 : 4}>
+      <BagIcon aria-label="bag" />
+
+      {count >= 1 && (
+        <Box
+          position="absolute"
+          top={isNavigation ? 0 : '6px'}
+          right={isNavigation ? 0 : '12px'}
+          background="red.500"
+          color="white"
+          borderRadius="50%"
+          display="inline-flex"
+          justifyContent="center"
+          alignItems="center"
+          fontSize=".75rem"
+          fontWeight="normal"
+          w="1rem"
+          h="1rem"
+        >
+          {count}
+        </Box>
+      )}
+    </Box>
+  )
+}
+
+export function BagTotal() {
   const total = useSelector(selectBagTotal)
 
   return (

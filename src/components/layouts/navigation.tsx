@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import {
   Flex,
@@ -20,41 +19,12 @@ import {
   useMediaQuery
 } from '@chakra-ui/react'
 import { HamburgerIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { BrandIcon, DeliveryIcon, BagIcon, UserIcon } from 'components/icons'
+import { BrandIcon, DeliveryIcon, UserIcon } from 'components/icons'
 import { NextChakraLink } from 'components/helpers'
-import { selectBagCount } from 'store/bag'
+import { BagIconWithBadge } from 'components/bag'
 
 const navigation1 = ['Shipping', 'FAQ', 'Contact']
 const navigation2 = ['new release', 'men', 'women', 'kids', 'customize']
-
-function BagIconWithBadge() {
-  const count = useSelector(selectBagCount)
-
-  return (
-    <Box display="inline" position="relative">
-      <BagIcon />
-
-      {count >= 1 && (
-        <Box
-          position="absolute"
-          top={0}
-          right={0}
-          background="red.500"
-          color="white"
-          borderRadius="50%"
-          display="inline-flex"
-          justifyContent="center"
-          alignItems="center"
-          fontSize=".5rem"
-          w="1rem"
-          h="1rem"
-        >
-          {count}
-        </Box>
-      )}
-    </Box>
-  )
-}
 
 function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -185,7 +155,7 @@ export default function TopNavigation() {
               fontSize="24px"
               _hover={{ textDecoration: 'none' }}
             >
-              <BagIconWithBadge aria-label="bag" />
+              <BagIconWithBadge isNavigation />
             </NextChakraLink>
           </Box>
 
