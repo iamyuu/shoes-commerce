@@ -102,8 +102,8 @@ export function ShoesDetail(props: ShoesDetailProps) {
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
   const [isDesktop] = useMediaQuery(`(min-width: ${theme.breakpoints.lg}`)
 
-  if (error && !loading) {
-    if (/not found/i.test(error.message)) {
+  if (error) {
+    if (/not found/i.test(error?.message)) {
       return <NotFound />
     }
 
