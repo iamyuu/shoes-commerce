@@ -27,7 +27,7 @@ function ShoesListFallback() {
 
 function ShoesListItem(props: Shoes) {
   const theme = useTheme()
-  const slug = slugify(props.name)
+  const slug = `/shoes/${slugify(props.name)}`
   const randomNumber = Math.floor(Math.random() * 8 + 1)
 
   return (
