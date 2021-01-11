@@ -9,6 +9,7 @@ export interface Bag extends Shoes {
 export interface BagState {
   items: Bag[]
   count: number
+  total: number
 }
 
 export interface AddOrUpdateAction {

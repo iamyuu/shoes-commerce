@@ -6,3 +6,5 @@ export const selectBag = (state: RootState): BagState => state.bag
 export const selectBagItems = (state: RootState): Bag[] => state.bag.items
 
 export const selectBagCount = (state: RootState): number => state.bag.count
+
+export const selectBagTotal = (state: RootState): number => state.bag.total

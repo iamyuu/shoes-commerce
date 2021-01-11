@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Box, Flex, Text, Table, Thead, Tbody, Tr, Th, Td, Image, NumberInput, NumberInputField, CloseButton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
 import { formatCurrency, slugify } from 'utils/misc'
-import { remove, setQuantity, selectBagItems } from 'store/bag'
+import { remove, setQuantity, selectBagItems, selectBagTotal } from 'store/bag'
 
 interface InputQuantityProps {
   index: number
@@ -11,15 +11,14 @@ interface InputQuantityProps {
 }
 
 export function Total() {
-  const items = useSelector(selectBagItems)
-  const countTotal = items.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
+  const total = useSelector(selectBagTotal)
 
   return (
     <>
       <Text as="span" textTransform="uppercase">
         Total
       </Text>
-      <Text as="span">{formatCurrency.format(countTotal)}</Text>
+      <Text as="span">{formatCurrency.format(total)}</Text>
     </>
   )
 }

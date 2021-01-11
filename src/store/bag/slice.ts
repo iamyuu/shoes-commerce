@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { BagState, AddOrUpdateAction, RemoveAction, SetQuantityAction } from './types'
+import { Bag, BagState, AddOrUpdateAction, RemoveAction, SetQuantityAction } from './types'
 
 const initialState: BagState = {
   count: 0,
+  total: 0,
   items: []
 }
+
+const countTotal = (items: Bag[]) => items.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
 
 const bagSlice = createSlice({
   name: 'bag',
@@ -23,10 +26,13 @@ const bagSlice = createSlice({
         state.count += 1
         state.items = [...state.items, newItem]
       }
+
+      state.total = countTotal(state.items)
     },
     remove: (state, action: PayloadAction<RemoveAction>) => {
       state.count -= 1
       state.items = [...state.items].splice(action.payload.index, 1)
+      state.total = countTotal(state.items)
     },
     setQuantity: (state, action: PayloadAction<SetQuantityAction>) => {
       const { index, newQuantity } = action.payload
@@ -38,6 +44,7 @@ const bagSlice = createSlice({
       }
 
       state.items = updatedBagItems
+      state.total = countTotal(updatedBagItems)
     }
   }
 })
