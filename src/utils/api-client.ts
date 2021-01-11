@@ -19,6 +19,6 @@ export default function client(endpoint, requestInit?: RequestInitClient) {
 
   return window.fetch(`${API_URL}${endpoint}`, config).then(async response => {
     const responseData = await response.json()
-    return response.ok ? responseData : Promise.reject(responseData)
+    return response.ok ? responseData.data : Promise.reject(responseData)
   })
 }

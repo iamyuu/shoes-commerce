@@ -18,7 +18,7 @@ export interface Color {
 }
 
 export function useAllShoes() {
-  const { data, ...result } = useSWR<Shoes[], Error>('/shoes')
+  const { data, ...result } = useSWR<Shoes[], Error>('/shoes.json')
 
   return {
     ...result,
