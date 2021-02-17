@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import useSWR from 'swr'
 import { slugify } from 'utils/misc'
 
