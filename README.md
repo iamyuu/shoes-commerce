@@ -1,6 +1,12 @@
 # Shoes Commerce
 
-Demo url: [shoes-commerce.iamyuu.vercel.app](https://shoes-commerce.iamyuu.vercel.app)
+## User Stories
+
+- [x] User can see list shoes
+- [x] User can see detail shoe
+- [x] User can add one or more shoe to the bag
+- [x] User can change the quantity of shoe
+- [ ] User can checkout
 
 ## Libraries
 
@@ -17,4 +23,3 @@ Demo url: [shoes-commerce.iamyuu.vercel.app](https://shoes-commerce.iamyuu.verce
 In the project directory, you can run:
 
 - `yarn dev`: Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
