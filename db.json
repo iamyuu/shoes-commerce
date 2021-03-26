@@ -5,18 +5,7 @@
       "category": "Men Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 30,
-      "sizes": [
-        "8",
-        "8.5",
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5",
-        "12",
-        "12.5"
-      ],
+      "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
       "colors": [
         {
           "name": "Just Brown",
@@ -42,16 +31,7 @@
       "category": "Men Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 98,
-      "sizes": [
-        "8",
-        "8.5",
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5"
-      ],
+      "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5"],
       "colors": [
         {
           "name": "Just Brown",
@@ -73,18 +53,7 @@
       "category": "Running Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 30,
-      "sizes": [
-        "8",
-        "8.5",
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5",
-        "12",
-        "12.5"
-      ],
+      "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
       "colors": [
         {
           "name": "Just Brown",
@@ -110,15 +79,7 @@
       "category": "Men Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 75,
-      "sizes": [
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5",
-        "12",
-        "12.5"
-      ],
+      "sizes": ["9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
       "colors": [
         {
           "name": "Just Brown",
@@ -144,15 +105,7 @@
       "category": "Basketball Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 30,
-      "sizes": [
-        "8",
-        "8.5",
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11"
-      ],
+      "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11"],
       "colors": [
         {
           "name": "Just Brown",
@@ -174,16 +127,7 @@
       "category": "Men Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 95.97,
-      "sizes": [
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5",
-        "12",
-        "12.5"
-      ],
+      "sizes": ["9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
       "colors": [
         {
           "name": "Mistique Black",
@@ -205,16 +149,7 @@
       "category": "Men Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 30,
-      "sizes": [
-        "8",
-        "8.5",
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5"
-      ],
+      "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5"],
       "colors": [
         {
           "name": "Just Brown",
@@ -236,16 +171,7 @@
       "category": "Basketball Shoes",
       "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
       "price": 56,
-      "sizes": [
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5",
-        "12",
-        "12.5"
-      ],
+      "sizes": ["9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
       "colors": [
         {
           "name": "Just Brown",
@@ -268,4 +194,3 @@
     }
   ]
 }
-
