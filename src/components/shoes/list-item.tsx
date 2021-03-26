@@ -31,8 +31,15 @@ function ShoesListItem(props: Shoes) {
 
   return (
     <NextChakraLink href={slug} _hover={{ textTransform: 'none' }}>
-      <AspectRatio maxWidth="full" height="350px" maxHeight="400px" ratio={4 / 3} bg="brand.gray">
-        <Image src={`/images/shoes/image-5.jpg`} alt={props.name} objectFit="cover" />
+      <AspectRatio
+        maxWidth="full"
+        height="350px"
+        maxHeight="400px"
+        ratio={4 / 3}
+        bg="brand.gray"
+        sx={{ '> img': { objectFit: 'contain' } }}
+      >
+        <Image src={`/images/shoes/image-5.jpg`} alt={props.name} />
       </AspectRatio>
 
       <Box display="flex" mt="20px">
