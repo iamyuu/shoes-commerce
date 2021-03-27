@@ -4,7 +4,7 @@ interface RequestInitClient extends RequestInit {
   data?: Record<string, unknown>
 }
 
-export default function client(endpoint, requestInit?: RequestInitClient) {
+async function request(uri: string, requestInit?: RequestInitClient) {
   const { data, headers: customHeaders, ...customConfig } = requestInit || {}
 
   const config = {
@@ -17,8 +17,14 @@ export default function client(endpoint, requestInit?: RequestInitClient) {
     ...customConfig
   }
 
-  return window.fetch(`${API_URL}${endpoint}`, config).then(async response => {
+  return window.fetch(uri, config).then(async response => {
     const responseData = await response.json()
     return response.ok ? responseData : Promise.reject(responseData)
   })
 }
+
+const client = (endpoint: string, requestInit?: RequestInitClient) => request(`${API_URL}${endpoint}`, requestInit)
+
+const apiRoutes = (endpoint: string, requestInit?: RequestInitClient) => request(`/api${endpoint}`, requestInit)
+
+export { client, apiRoutes }
