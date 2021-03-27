@@ -6,18 +6,43 @@ import { BagTable, BagTotal, BagIconWithBadge } from 'components/bag'
 import { Page, PageHeader } from 'components/layouts'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 import { ArrowLongRightIcon } from 'components/icons'
+import { redirectToCheckout } from 'services/stripe'
+import { selectBagItems } from 'store/bag'
+import { useSelector } from 'react-redux'
 
-const BagPage: NextPage = () => {
-  const toast = useToast()
+function ButtonPay() {
+  const items = useSelector(selectBagItems)
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
 
-  const handlePay = () => {
-    toast({
-      duration: 3000,
-      status: 'info',
-      description: 'This feature not available yet'
-    })
+  async function handlePay() {
+    try {
+      setIsSubmitting(true)
+      toast.closeAll()
+
+      await redirectToCheckout(items)
+    } catch (error) {
+      toast({
+        status: 'error',
+        title: 'Oops',
+        description: error.message
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
+  return (
+    <Button justifyContent="space-between" w={['100%', '40%']} loadingText="Processing" isLoading={isSubmitting} onClick={handlePay}>
+      <Text as="span" textTransform="uppercase">
+        Pay Now
+      </Text>
+      <ArrowLongRightIcon position="relative" top="20%" fontSize="1.75rem" />
+    </Button>
+  )
+}
+
+const BagPage: NextPage = () => {
   return (
     <Page>
       <NextSeo title="Your Bag" />
@@ -35,12 +60,7 @@ const BagPage: NextPage = () => {
             <BagTotal />
           </Flex>
 
-          <Button justifyContent="space-between" w={['100%', '40%']} onClick={handlePay}>
-            <Text as="span" textTransform="uppercase">
-              Pay Now
-            </Text>
-            <ArrowLongRightIcon position="relative" top="20%" fontSize="1.75rem" />
-          </Button>
+          <ButtonPay />
         </Flex>
       </ErrorBoundary>
     </Page>
