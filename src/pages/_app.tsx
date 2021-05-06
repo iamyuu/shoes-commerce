@@ -4,7 +4,7 @@ import GoogleFonts from 'next-google-fonts'
 import { SWRConfig } from 'swr'
 import { Provider } from 'react-redux'
 import { ChakraProvider } from '@chakra-ui/react'
-import client from 'utils/api-client'
+import { client } from 'utils/api-client'
 import store from 'store'
 import theme from 'theme'
 

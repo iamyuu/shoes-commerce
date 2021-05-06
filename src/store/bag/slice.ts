@@ -7,7 +7,7 @@ const initialState: BagState = {
   items: []
 }
 
-const countTotal = (items: Bag[]) => items.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
+const sumTotal = (items: Bag[]) => items.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
 
 const bagSlice = createSlice({
   name: 'bag',
@@ -27,12 +27,12 @@ const bagSlice = createSlice({
         state.items = [...state.items, newItem]
       }
 
-      state.total = countTotal(state.items)
+      state.total = sumTotal(state.items)
     },
     remove: (state, action: PayloadAction<RemoveAction>) => {
       state.count -= 1
       state.items = [...state.items].splice(action.payload.index, 1)
-      state.total = countTotal(state.items)
+      state.total = sumTotal(state.items)
     },
     setQuantity: (state, action: PayloadAction<SetQuantityAction>) => {
       const { index, newQuantity } = action.payload
@@ -44,7 +44,7 @@ const bagSlice = createSlice({
       }
 
       state.items = updatedBagItems
-      state.total = countTotal(updatedBagItems)
+      state.total = sumTotal(updatedBagItems)
     }
   }
 })

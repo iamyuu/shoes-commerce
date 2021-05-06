@@ -6,18 +6,62 @@ import { BagTable, BagTotal, BagIconWithBadge } from 'components/bag'
 import { Page, PageHeader } from 'components/layouts'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 import { ArrowLongRightIcon } from 'components/icons'
+import { loadStripe } from '@stripe/stripe-js'
+import { apiRoutes } from 'utils/api-client'
+import { selectBagItems } from 'store/bag'
+import { useSelector } from 'react-redux'
 
-const BagPage: NextPage = () => {
-  const toast = useToast()
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
-  const handlePay = () => {
-    toast({
-      duration: 3000,
-      status: 'info',
-      description: 'This feature not available yet'
-    })
+function ButtonPay() {
+  const items = useSelector(selectBagItems)
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
+
+  async function handlePay() {
+    try {
+      setIsSubmitting(true)
+      toast.closeAll()
+
+      const { sessionId } = await apiRoutes('/create-checkout-session', {
+        data: { items }
+      })
+
+      const { redirectToCheckout } = await stripePromise
+      const result = await redirectToCheckout({ sessionId })
+
+      if (result.error) {
+        throw result.error
+      }
+    } catch (error) {
+      toast({
+        status: 'error',
+        title: 'Oops',
+        description: error.message
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
+  return (
+    <Button
+      justifyContent="space-between"
+      w={['100%', '40%']}
+      loadingText="Processing"
+      isLoading={isSubmitting}
+      isDisabled={items.length < 1}
+      onClick={handlePay}
+    >
+      <Text as="span" textTransform="uppercase">
+        Pay Now
+      </Text>
+      <ArrowLongRightIcon position="relative" top="20%" fontSize="1.75rem" />
+    </Button>
+  )
+}
+
+const BagPage: NextPage = () => {
   return (
     <Page>
       <NextSeo title="Your Bag" />
@@ -35,12 +79,7 @@ const BagPage: NextPage = () => {
             <BagTotal />
           </Flex>
 
-          <Button justifyContent="space-between" w={['100%', '40%']} onClick={handlePay}>
-            <Text as="span" textTransform="uppercase">
-              Pay Now
-            </Text>
-            <ArrowLongRightIcon position="relative" top="20%" fontSize="1.75rem" />
-          </Button>
+          <ButtonPay />
         </Flex>
       </ErrorBoundary>
     </Page>
