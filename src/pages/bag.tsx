@@ -45,7 +45,14 @@ function ButtonPay() {
   }
 
   return (
-    <Button justifyContent="space-between" w={['100%', '40%']} loadingText="Processing" isLoading={isSubmitting} onClick={handlePay}>
+    <Button
+      justifyContent="space-between"
+      w={['100%', '40%']}
+      loadingText="Processing"
+      isLoading={isSubmitting}
+      isDisabled={items.length < 1}
+      onClick={handlePay}
+    >
       <Text as="span" textTransform="uppercase">
         Pay Now
       </Text>
