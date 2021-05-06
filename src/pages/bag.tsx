@@ -6,9 +6,12 @@ import { BagTable, BagTotal, BagIconWithBadge } from 'components/bag'
 import { Page, PageHeader } from 'components/layouts'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 import { ArrowLongRightIcon } from 'components/icons'
-import { redirectToCheckout } from 'services/stripe'
+import { loadStripe } from '@stripe/stripe-js'
+import { apiRoutes } from 'utils/api-client'
 import { selectBagItems } from 'store/bag'
 import { useSelector } from 'react-redux'
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 function ButtonPay() {
   const items = useSelector(selectBagItems)
@@ -20,7 +23,16 @@ function ButtonPay() {
       setIsSubmitting(true)
       toast.closeAll()
 
-      await redirectToCheckout(items)
+      const { sessionId } = await apiRoutes('/create-checkout-session', {
+        data: { items }
+      })
+
+      const { redirectToCheckout } = await stripePromise
+      const result = await redirectToCheckout({ sessionId })
+
+      if (result.error) {
+        throw result.error
+      }
     } catch (error) {
       toast({
         status: 'error',

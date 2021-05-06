@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createCheckoutSession } from 'services/stripe'
+import { createCheckoutSession, CheckoutParams } from 'services/checkout'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -7,9 +7,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const session = await createCheckoutSession(req.body.items)
+    const data: CheckoutParams = {
+      items: req.body.items,
+      callbackDomain: req.headers.origin
+    }
 
-    return res.status(200).json({ id: session.id })
+    const result = await createCheckoutSession(data)
+
+    return res.status(200).json(result)
   } catch (error) {
     return res.status(400).json({ message: error.message })
   }
