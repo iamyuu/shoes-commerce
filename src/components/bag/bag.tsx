@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import type { StringOrNumber } from '@chakra-ui/utils'
 import { Box, Flex, Text, Table, Thead, Tbody, Tr, Th, Td, Image, NumberInput, NumberInputField, CloseButton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
 import { BagIcon } from 'components/icons'
@@ -8,7 +9,7 @@ import { remove, setQuantity, selectBagItems, selectBagCount, selectBagTotal } f
 
 interface InputQuantityProps {
   index: number
-  defaultValue: string
+  defaultValue: StringOrNumber
 }
 
 export function BagIconWithBadge({ isNavigation = false }) {

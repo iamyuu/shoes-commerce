@@ -13,7 +13,7 @@
 - [SWR](https://swr.vercel.app) for data fetching
 - [Redux](http://redux.js.org) for state management
 - [Chakra UI](https://chakra-ui.com) for looks and feel in general
-- [Stripe](https://stripe.com) for payment
+- [Stripe](https://stripe.com) for checkout
 
 ## Prerequisite
 

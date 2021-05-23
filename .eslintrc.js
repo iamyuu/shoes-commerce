@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['blvd', 'prettier', 'prettier/@typescript-eslint', 'prettier/react', 'plugin:prettier/recommended'],
+  extends: ['blvd', 'prettier'],
   plugins: ['prettier'],
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': 'off',

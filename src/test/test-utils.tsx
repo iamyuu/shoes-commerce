@@ -3,6 +3,8 @@ import { RouterContext } from 'next/dist/next-server/lib/router-context'
 import { NextRouter } from 'next/router'
 import { AllProvider } from 'pages/_app'
 
+type RenderUI = Parameters<typeof rtlRender>[0]
+
 interface CustomRenderOptions extends RenderOptions {
   router?: Partial<NextRouter>
 }
@@ -26,10 +28,13 @@ const mockRouter: NextRouter = {
     off: jest.fn(),
     emit: jest.fn()
   },
-  isFallback: false
+  isLocaleDomain: true,
+  isFallback: false,
+  isPreview: false,
+  isReady: true
 }
 
-export const render = (ui, { router, ...options }: CustomRenderOptions = {}) => {
+export function render(ui: RenderUI, { router, ...options }: CustomRenderOptions = {}) {
   return rtlRender(ui, {
     wrapper: props => (
       <RouterContext.Provider value={{ ...mockRouter, ...router }}>

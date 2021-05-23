@@ -1,10 +1,10 @@
 import { useRadio, useRadioGroup, Box, Flex } from '@chakra-ui/react'
-import type { UseRadioProps, UseRadioGroupProps, PseudoProps, ChakraStyleProps } from '@chakra-ui/react'
+import type { UseRadioProps, UseRadioGroupProps, ChakraProps } from '@chakra-ui/react'
 
-export interface BaseRadioProps extends ChakraStyleProps {
+export interface BaseRadioProps extends ChakraProps {
   bg?: string
   isRounded?: boolean
-  _checked?: ChakraStyleProps | PseudoProps<ChakraStyleProps>
+  _checked?: ChakraProps
 }
 
 export interface RadioProps extends BaseRadioProps, UseRadioProps {

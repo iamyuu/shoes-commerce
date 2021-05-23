@@ -61,29 +61,27 @@ function ButtonPay() {
   )
 }
 
-const BagPage: NextPage = () => {
-  return (
-    <Page>
-      <NextSeo title="Your Bag" />
+const BagPage: NextPage = () => (
+  <Page>
+    <NextSeo title="Your Bag" />
 
-      <PageHeader>
-        Your Bag
-        <BagIconWithBadge />
-      </PageHeader>
+    <PageHeader>
+      Your Bag
+      <BagIconWithBadge />
+    </PageHeader>
 
-      <ErrorBoundary>
-        <BagTable />
+    <ErrorBoundary>
+      <BagTable />
 
-        <Flex mt={8} flexDirection="column" alignItems="flex-end">
-          <Flex justifyContent="space-between" w={['100%', '40%']} p={4} mb={['10px', '20px']} bg="brand.gray">
-            <BagTotal />
-          </Flex>
-
-          <ButtonPay />
+      <Flex mt={8} flexDirection="column" alignItems="flex-end">
+        <Flex justifyContent="space-between" w={['100%', '40%']} p={4} mb={['10px', '20px']} bg="brand.gray">
+          <BagTotal />
         </Flex>
-      </ErrorBoundary>
-    </Page>
-  )
-}
+
+        <ButtonPay />
+      </Flex>
+    </ErrorBoundary>
+  </Page>
+)
 
 export default BagPage
