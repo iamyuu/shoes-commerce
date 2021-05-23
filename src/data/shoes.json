@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Nike Air Force 1",
+    "category": "Men Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 30,
+    "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
+    "colors": [
+      {
+        "name": "Just Brown",
+        "color_hash": "#AA6159"
+      },
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Sky Blue",
+        "color_hash": "#6389CB"
+      },
+      {
+        "name": "Somewhat Gold",
+        "color_hash": "#F2C758"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  },
+  {
+    "name": "Zoom Freak 2",
+    "category": "Men Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 98,
+    "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5"],
+    "colors": [
+      {
+        "name": "Just Brown",
+        "color_hash": "#AA6159"
+      },
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Somewhat Gold",
+        "color_hash": "#F2C758"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  },
+  {
+    "name": "Jordan Delta",
+    "category": "Running Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 30,
+    "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
+    "colors": [
+      {
+        "name": "Just Brown",
+        "color_hash": "#AA6159"
+      },
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Sky Blue",
+        "color_hash": "#6389CB"
+      },
+      {
+        "name": "Somewhat Gold",
+        "color_hash": "#F2C758"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  },
+  {
+    "name": "Kyrie 7 EP",
+    "category": "Men Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 75,
+    "sizes": ["9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
+    "colors": [
+      {
+        "name": "Just Brown",
+        "color_hash": "#AA6159"
+      },
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Sky Blue",
+        "color_hash": "#6389CB"
+      },
+      {
+        "name": "Somewhat Gold",
+        "color_hash": "#F2C758"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  },
+  {
+    "name": "Nike Air Zoom BB NXT",
+    "category": "Basketball Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 30,
+    "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11"],
+    "colors": [
+      {
+        "name": "Just Brown",
+        "color_hash": "#AA6159"
+      },
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Somewhat Gold",
+        "color_hash": "#F2C758"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  },
+  {
+    "name": "Nike Air Edge 270",
+    "category": "Men Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 95.97,
+    "sizes": ["9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
+    "colors": [
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Sky Blue",
+        "color_hash": "#6389CB"
+      },
+      {
+        "name": "Somewhat Gold",
+        "color_hash": "#F2C758"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  },
+  {
+    "name": "KD13 EP",
+    "category": "Men Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 30,
+    "sizes": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5"],
+    "colors": [
+      {
+        "name": "Just Brown",
+        "color_hash": "#AA6159"
+      },
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Sky Blue",
+        "color_hash": "#6389CB"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  },
+  {
+    "name": "KD Trey 5 VII EP",
+    "category": "Basketball Shoes",
+    "description": "The Nike Air Edge 270 takes the look of retro basketball and puts it through a modern lens.",
+    "price": 56,
+    "sizes": ["9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5"],
+    "colors": [
+      {
+        "name": "Just Brown",
+        "color_hash": "#AA6159"
+      },
+      {
+        "name": "Mistique Black",
+        "color_hash": "#272425"
+      },
+      {
+        "name": "Sky Blue",
+        "color_hash": "#6389CB"
+      },
+      {
+        "name": "Somewhat Gold",
+        "color_hash": "#F2C758"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lvfB_p0IiHM"
+  }
+]

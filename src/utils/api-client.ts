@@ -11,7 +11,7 @@ async function request(uri: string, requestInit?: RequestInitClient) {
     method: data ? 'POST' : 'GET',
     body: data ? JSON.stringify(data) : undefined,
     headers: {
-      'Content-Type': data ? 'application/json' : undefined,
+      'Content-Type': 'application/json',
       ...customHeaders
     },
     ...customConfig
@@ -25,6 +25,4 @@ async function request(uri: string, requestInit?: RequestInitClient) {
 
 const client = (endpoint: string, requestInit?: RequestInitClient) => request(`${API_URL}${endpoint}`, requestInit)
 
-const apiRoutes = (endpoint: string, requestInit?: RequestInitClient) => request(`/api${endpoint}`, requestInit)
-
-export { client, apiRoutes }
+export { client }

@@ -7,7 +7,7 @@ import { Page, PageHeader } from 'components/layouts'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 import { ArrowLongRightIcon } from 'components/icons'
 import { loadStripe } from '@stripe/stripe-js'
-import { apiRoutes } from 'utils/api-client'
+import { client } from 'utils/api-client'
 import { selectBagItems } from 'store/bag'
 import { useSelector } from 'react-redux'
 
@@ -23,7 +23,7 @@ function ButtonPay() {
       setIsSubmitting(true)
       toast.closeAll()
 
-      const { sessionId } = await apiRoutes('/create-checkout-session', {
+      const { sessionId } = await client('/create-checkout-session', {
         data: { items }
       })
 

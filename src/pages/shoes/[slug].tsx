@@ -12,7 +12,7 @@ const Detail: NextPage = () => {
     <Page>
       <Box pt={[0, '2.5rem']}>
         <ErrorBoundary>
-          <ShoesDetail slug={router.query.slug as string} />
+          <ShoesDetail slug={router.isReady ? (router.query.slug as string) : undefined} />
         </ErrorBoundary>
       </Box>
     </Page>

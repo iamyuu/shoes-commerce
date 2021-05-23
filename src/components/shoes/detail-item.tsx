@@ -24,7 +24,7 @@ import {
   Skeleton,
   SkeletonCircle
 } from '@chakra-ui/react'
-import { NotFound } from 'components/ui/error-fallback'
+// import { NotFound } from 'components/ui/error-fallback'
 import { Radio, RadioButton } from 'components/ui/radio'
 import { PlayIcon, DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
@@ -32,7 +32,7 @@ import { useSingleShoes, Color } from 'services/shoes'
 import { addOrUpdate } from 'store/bag'
 
 interface ShoesDetailProps {
-  slug: string
+  slug?: string
 }
 
 interface PlayVideoProps {
@@ -98,15 +98,11 @@ function ChooseColor(props: ChooseColorProps) {
 export function ShoesDetail(props: ShoesDetailProps) {
   const theme = useTheme()
   const dispatch = useDispatch()
-  const { shoes, loading, error } = useSingleShoes(props.slug)
+  const { shoes, loading, error } = useSingleShoes(props?.slug)
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
   const [isDesktop] = useMediaQuery(`(min-width: ${theme.breakpoints.lg}`)
 
   if (error) {
-    if (/not found/i.test(error?.message)) {
-      return <NotFound />
-    }
-
     throw error
   }
 

@@ -1,5 +1,4 @@
 import useSWR from 'swr'
-import { slugify } from 'utils/misc'
 
 export interface Shoes {
   name: string
@@ -16,8 +15,18 @@ export interface Color {
   color_hash: string
 }
 
+const loadingShoes: Shoes = {
+  name: `Loading shoes`,
+  price: 0,
+  description: `Loading shoes`,
+  category: `loading`,
+  video: ``,
+  sizes: [],
+  colors: []
+}
+
 export function useAllShoes() {
-  const { data, ...result } = useSWR<Shoes[], Error>('/data')
+  const { data, ...result } = useSWR<Shoes[], Error>(`/shoes`)
 
   return {
     ...result,
@@ -26,19 +35,12 @@ export function useAllShoes() {
   }
 }
 
-export function useSingleShoes(slug: string) {
-  const { allShoes, ...result } = useAllShoes()
-  const filteredShoes = allShoes?.filter(val => slugify(val.name) === slug)
-  const hasShoes = Array.isArray(filteredShoes) && filteredShoes.length > 0
-
-  const error = result.error || !hasShoes ? new Error('Shoes not found') : null
-  const shoes: Shoes = hasShoes ? filteredShoes[0] : ({} as Shoes)
-  const loading = !shoes || !shoes.sizes || !shoes.colors
+export function useSingleShoes(slug?: string) {
+  const { data, ...result } = useSWR<Shoes, Error>(slug ? `/shoes/${slug}` : undefined)
 
   return {
     ...result,
-    loading,
-    error,
-    shoes
+    loading: !data,
+    shoes: data || loadingShoes
   }
 }
