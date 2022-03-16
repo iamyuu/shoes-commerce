@@ -2,9 +2,10 @@ import { AppProps } from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import { SWRConfig } from 'swr'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import { client } from 'utils/api-client'
-import store from 'store'
+import { store, persistor } from 'store'
 import theme from 'theme'
 
 const swrConfig = {
@@ -13,11 +14,13 @@ const swrConfig = {
 
 export const AllProvider: React.FC = ({ children }) => (
   <Provider store={store}>
-    <SWRConfig value={swrConfig}>
-      <ChakraProvider resetCSS theme={theme}>
-        {children}
-      </ChakraProvider>
-    </SWRConfig>
+    <PersistGate loading={null} persistor={persistor}>
+      <SWRConfig value={swrConfig}>
+        <ChakraProvider resetCSS theme={theme}>
+          {children}
+        </ChakraProvider>
+      </SWRConfig>
+    </PersistGate>
   </Provider>
 )
 
