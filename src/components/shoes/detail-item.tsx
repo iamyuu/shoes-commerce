@@ -4,8 +4,6 @@ import {
   useToast,
   useDisclosure,
   useRadioGroup,
-  useTheme,
-  useMediaQuery,
   HStack,
   Box,
   Flex,
@@ -24,7 +22,7 @@ import {
   Skeleton,
   SkeletonCircle
 } from '@chakra-ui/react'
-// import { NotFound } from 'components/ui/error-fallback'
+import { CheckIcon } from '@chakra-ui/icons'
 import { Radio, RadioButton } from 'components/ui/radio'
 import { PlayIcon, DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
@@ -80,27 +78,31 @@ function ChooseColor(props: ChooseColorProps) {
 
   return (
     <HStack {...getRootProps()}>
-      {props.colors.map(value => (
-        <Radio
-          id="choose-color"
-          isRounded
-          borderWidth="5px"
-          key={value.color_hash}
-          bg={value.color_hash}
-          _checked={{ bg: value.color_hash }}
-          {...getRadioProps({ value: value.color_hash })}
-        />
-      ))}
+      {props.colors.map(value => {
+        const radio = getRadioProps({ value: value.color_hash })
+
+        return (
+          <Radio
+            id="choose-color"
+            isRounded
+            borderWidth={3}
+            key={value.color_hash}
+            bg={value.color_hash}
+            _checked={{ bg: value.color_hash }}
+            {...radio}
+          >
+            {radio.isChecked ? <CheckIcon color="white" /> : null}
+          </Radio>
+        )
+      })}
     </HStack>
   )
 }
 
 export function ShoesDetail(props: ShoesDetailProps) {
-  const theme = useTheme()
   const dispatch = useDispatch()
   const { shoes, loading, error } = useSingleShoes(props?.slug)
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
-  const [isDesktop] = useMediaQuery(`(min-width: ${theme.breakpoints.lg}`)
 
   if (error) {
     throw error
@@ -143,13 +145,7 @@ export function ShoesDetail(props: ShoesDetailProps) {
       <Flex direction={['column', null, null, 'row']}>
         <Box>
           <Skeleton isLoaded={!loading}>
-            {isDesktop ? (
-              <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" />
-            ) : (
-              <AspectRatio ratio={4 / 3} bg="brand.gray">
-                <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" />
-              </AspectRatio>
-            )}
+            <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" mx="auto" />
           </Skeleton>
 
           <SimpleGrid minChildWidth={['50px', '100px']} spacing="20px" mt={['20px', null, '40px', '20px']} mb="40px">
