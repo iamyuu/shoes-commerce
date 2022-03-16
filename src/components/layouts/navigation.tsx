@@ -134,7 +134,7 @@ export default function TopNavigation() {
                 py={0}
                 h="full"
                 textTransform="capitalize"
-                borderBottom={pathname === '/' && navItem.includes(navigation2[0]) ? `1px solid ${theme.colors.black}` : null}
+                borderBottom={pathname === '/' && navItem.includes(navigation2[0]) ? `1px solid ${theme.colors.black}` : undefined}
                 _hover={{ textDecoration: 'none' }}
               >
                 {navItem}

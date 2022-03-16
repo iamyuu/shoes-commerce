@@ -1,6 +1,12 @@
 import { Box, Text } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
-import { ErrorBoundary as ErrorBoundaryInternal, FallbackProps } from 'react-error-boundary'
+import {
+  ErrorBoundary as ErrorBoundaryInternal,
+  ErrorBoundaryProps as ErrorBoundaryPropsInternal,
+  FallbackProps
+} from 'react-error-boundary'
+
+type ErrorBoundaryProps = React.PropsWithChildren<Omit<ErrorBoundaryPropsInternal, 'fallback' | 'fallbackRender' | 'FallbackComponent'>>
 
 export function NotFound() {
   return (
@@ -21,6 +27,6 @@ export function ErrorFallback(props: FallbackProps) {
   )
 }
 
-export function ErrorBoundary(props) {
+export function ErrorBoundary(props: ErrorBoundaryProps) {
   return <ErrorBoundaryInternal FallbackComponent={ErrorFallback} {...props} />
 }

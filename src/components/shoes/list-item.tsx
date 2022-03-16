@@ -27,10 +27,10 @@ function ShoesListFallback() {
 
 function ShoesListItem(props: Shoes) {
   const theme = useTheme()
-  const slug = `/shoes/${slugify(props.name)}`
+  const slug = slugify(props.name)
 
   return (
-    <NextChakraLink href={slug} _hover={{ textTransform: 'none' }}>
+    <NextChakraLink href={`?shoes=${slug}`} as={`/shoes/${slug}`} scroll={false} _hover={{ textTransform: 'none' }}>
       <AspectRatio
         maxWidth="full"
         height="350px"
@@ -73,7 +73,7 @@ export function ShoesList() {
 
   return (
     <SimpleGrid minChildWidth="250px" spacing="24px">
-      {allShoes.map((shoes, index) => (
+      {allShoes?.map((shoes, index) => (
         <ShoesListItem key={index} {...shoes} />
       ))}
     </SimpleGrid>

@@ -9,13 +9,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const data: CheckoutParams = {
       items: req.body.items,
-      callbackDomain: req.headers.origin
+      callbackDomain: req.headers.origin ?? ''
     }
 
     const result = await createCheckoutSession(data)
 
     return res.status(200).json(result)
   } catch (error) {
-    return res.status(400).json({ message: error.message })
+    return res.status(400).json({ message: (error as Error).message })
   }
 }

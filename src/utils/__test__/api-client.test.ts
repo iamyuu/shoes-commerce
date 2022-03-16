@@ -47,9 +47,12 @@ test(`allows for config overrides`, async () => {
 
   await client(endpoint, customConfig)
 
-  expect(request.mode).toBe(customConfig.mode)
-  expect(request.method).toBe(customConfig.method)
-  expect(request.headers['Content-Type']).toBe(customConfig.headers['Content-Type'])
+  if (request) {
+    expect((request as RequestInit).mode).toBe(customConfig.mode)
+    expect((request as RequestInit).method).toBe(customConfig.method)
+    // @ts-expect-error
+    expect((request as RequestInit).headers['Content-Type']).toBe(customConfig.headers['Content-Type'])
+  }
 })
 
 test(`correctly rejects the promise if there's an error`, async () => {
@@ -79,6 +82,7 @@ test(`when data is provided, it's stringified and the method defaults to POST`, 
     if (url.toString().endsWith(endpoint)) {
       return {
         ok: true,
+        // @ts-expect-error
         json: async () => JSON.parse(config.body as string)
       } as Response
     }

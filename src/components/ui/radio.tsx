@@ -20,7 +20,7 @@ export function Radio(props: RadioProps) {
   const rounded = props.isRounded ? { borderRadius: '50%' } : {}
 
   return (
-    <Box as="label">
+    <label>
       <input {...getInputProps()} />
       <Box
         {...props}
@@ -46,7 +46,7 @@ export function Radio(props: RadioProps) {
       >
         {props?.children}
       </Box>
-    </Box>
+    </label>
   )
 }
 

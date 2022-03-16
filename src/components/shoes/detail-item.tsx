@@ -4,8 +4,6 @@ import {
   useToast,
   useDisclosure,
   useRadioGroup,
-  useTheme,
-  useMediaQuery,
   HStack,
   Box,
   Flex,
@@ -24,14 +22,14 @@ import {
   Skeleton,
   SkeletonCircle
 } from '@chakra-ui/react'
-// import { NotFound } from 'components/ui/error-fallback'
+import { CheckIcon } from '@chakra-ui/icons'
 import { Radio, RadioButton } from 'components/ui/radio'
 import { PlayIcon, DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
 import { useSingleShoes, Color } from 'services/shoes'
 import { addOrUpdate } from 'store/bag'
 
-interface ShoesDetailProps {
+export interface ShoesDetailProps {
   slug?: string
 }
 
@@ -44,12 +42,25 @@ interface ChooseColorProps {
   colors: Color[]
 }
 
+interface FormElements extends HTMLFormControlsCollection {
+  'choose-color': HTMLInputElement
+  'choose-size': HTMLInputElement
+}
+interface AddToBagFormElement extends HTMLFormElement {
+  readonly elements: FormElements
+}
+
 function PlayVideo(props: PlayVideoProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Flex direction="row" mx={['auto', null, 0]} cursor={props?.source ? 'pointer' : 'default'} onClick={props?.source ? onOpen : null}>
+      <Flex
+        direction="row"
+        mx={['auto', null, 0]}
+        cursor={props?.source ? 'pointer' : 'default'}
+        onClick={props?.source ? onOpen : undefined}
+      >
         <Box w="4rem" borderRadius="50%" bgColor="rgba(19, 18, 18, 0.05)">
           <PlayIcon position="relative" left={2} top={1} m={4} fontSize="2rem" color="brand.black" />
         </Box>
@@ -80,37 +91,41 @@ function ChooseColor(props: ChooseColorProps) {
 
   return (
     <HStack {...getRootProps()}>
-      {props.colors.map(value => (
-        <Radio
-          id="choose-color"
-          isRounded
-          borderWidth="5px"
-          key={value.color_hash}
-          bg={value.color_hash}
-          _checked={{ bg: value.color_hash }}
-          {...getRadioProps({ value: value.color_hash })}
-        />
-      ))}
+      {props.colors.map(value => {
+        const radio = getRadioProps({ value: value.color_hash })
+
+        return (
+          <Radio
+            id="choose-color"
+            isRounded
+            borderWidth={3}
+            key={value.color_hash}
+            bg={value.color_hash}
+            _checked={{ bg: value.color_hash }}
+            {...radio}
+          >
+            {radio.isChecked ? <CheckIcon color="white" /> : null}
+          </Radio>
+        )
+      })}
     </HStack>
   )
 }
 
 export function ShoesDetail(props: ShoesDetailProps) {
-  const theme = useTheme()
   const dispatch = useDispatch()
   const { shoes, loading, error } = useSingleShoes(props?.slug)
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
-  const [isDesktop] = useMediaQuery(`(min-width: ${theme.breakpoints.lg}`)
 
   if (error) {
     throw error
   }
 
-  function handleAddToBag(event) {
+  function handleAddToBag(event: React.FormEvent<AddToBagFormElement>) {
     event.preventDefault()
     toast.closeAll()
 
-    const { 'choose-color': chooseColor, 'choose-size': chooseSize } = event.target.elements
+    const { 'choose-color': chooseColor, 'choose-size': chooseSize } = event.currentTarget.elements
 
     if (!chooseColor.value || !chooseSize.value) {
       toast({
@@ -143,13 +158,7 @@ export function ShoesDetail(props: ShoesDetailProps) {
       <Flex direction={['column', null, null, 'row']}>
         <Box>
           <Skeleton isLoaded={!loading}>
-            {isDesktop ? (
-              <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" />
-            ) : (
-              <AspectRatio ratio={4 / 3} bg="brand.gray">
-                <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" />
-              </AspectRatio>
-            )}
+            <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" mx="auto" />
           </Skeleton>
 
           <SimpleGrid minChildWidth={['50px', '100px']} spacing="20px" mt={['20px', null, '40px', '20px']} mb="40px">

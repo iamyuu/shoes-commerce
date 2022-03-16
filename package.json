@@ -10,9 +10,9 @@
     "test": "jest --coverage",
     "test:watch": "jest --watchAll",
     "format": "prettier --write .",
-    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "lint": "next lint",
     "type-check": "tsc --pretty --noEmit",
-    "test-all": "npm run lint && npm run type-check && npm run test"
+    "validate": "npm run lint && npm run type-check && npm run test"
   },
   "dependencies": {
     "@chakra-ui/icons": "1.1.7",
@@ -37,25 +37,17 @@
     "@testing-library/jest-dom": "5.16.2",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
-    "@types/faker": "5.5.5",
     "@types/jest": "27.4.1",
     "@types/node": "17.0.21",
     "@types/react": "17.0.40",
-    "@typescript-eslint/eslint-plugin": "4.23.0",
-    "@typescript-eslint/parser": "4.23.0",
-    "eslint": "7.26.0",
-    "eslint-config-blvd": "1.1.1",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-import-resolver-typescript": "2.4.0",
-    "eslint-plugin-prettier": "3.4.0",
-    "eslint-plugin-react": "7.23.2",
-    "faker": "5.5.3",
+    "eslint": "8.11.0",
+    "eslint-config-next": "12.1.0",
     "husky": "7.0.4",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.5.1",
     "lint-staged": "12.3.6",
     "msw": "0.39.2",
     "prettier": "2.6.0",
-    "typescript": "4.1.5"
+    "typescript": "4.6.2"
   }
 }
