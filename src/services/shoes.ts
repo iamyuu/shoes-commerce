@@ -36,7 +36,7 @@ export function useAllShoes() {
 }
 
 export function useSingleShoes(slug?: string) {
-  const { data, ...result } = useSWR<Shoes, Error>(slug ? `/shoes/${slug}` : undefined)
+  const { data, ...result } = useSWR<Shoes, Error>(slug ? `/shoes/${slug}` : null)
 
   return {
     ...result,

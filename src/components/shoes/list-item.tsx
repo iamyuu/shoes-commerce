@@ -73,7 +73,7 @@ export function ShoesList() {
 
   return (
     <SimpleGrid minChildWidth="250px" spacing="24px">
-      {allShoes.map((shoes, index) => (
+      {allShoes?.map((shoes, index) => (
         <ShoesListItem key={index} {...shoes} />
       ))}
     </SimpleGrid>

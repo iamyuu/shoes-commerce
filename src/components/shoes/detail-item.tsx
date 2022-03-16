@@ -42,12 +42,25 @@ interface ChooseColorProps {
   colors: Color[]
 }
 
+interface FormElements extends HTMLFormControlsCollection {
+  'choose-color': HTMLInputElement
+  'choose-size': HTMLInputElement
+}
+interface AddToBagFormElement extends HTMLFormElement {
+  readonly elements: FormElements
+}
+
 function PlayVideo(props: PlayVideoProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Flex direction="row" mx={['auto', null, 0]} cursor={props?.source ? 'pointer' : 'default'} onClick={props?.source ? onOpen : null}>
+      <Flex
+        direction="row"
+        mx={['auto', null, 0]}
+        cursor={props?.source ? 'pointer' : 'default'}
+        onClick={props?.source ? onOpen : undefined}
+      >
         <Box w="4rem" borderRadius="50%" bgColor="rgba(19, 18, 18, 0.05)">
           <PlayIcon position="relative" left={2} top={1} m={4} fontSize="2rem" color="brand.black" />
         </Box>
@@ -108,11 +121,11 @@ export function ShoesDetail(props: ShoesDetailProps) {
     throw error
   }
 
-  function handleAddToBag(event) {
+  function handleAddToBag(event: React.FormEvent<AddToBagFormElement>) {
     event.preventDefault()
     toast.closeAll()
 
-    const { 'choose-color': chooseColor, 'choose-size': chooseSize } = event.target.elements
+    const { 'choose-color': chooseColor, 'choose-size': chooseSize } = event.currentTarget.elements
 
     if (!chooseColor.value || !chooseSize.value) {
       toast({

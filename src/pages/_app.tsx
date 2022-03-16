@@ -8,7 +8,7 @@ import store from 'store'
 import theme from 'theme'
 
 const swrConfig = {
-  fetcher: (endpoint, init) => client(endpoint, init)
+  fetcher: (endpoint: string) => client(endpoint)
 }
 
 export const AllProvider: React.FC = ({ children }) => (
@@ -27,7 +27,6 @@ export default function CustomApp({ Component, pageProps, router }: AppProps) {
   return (
     <AllProvider>
       <DefaultSeo title="Shoes Commerce" canonical={baseUrl + router.asPath || ''} />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
 
       <Component {...pageProps} />
     </AllProvider>

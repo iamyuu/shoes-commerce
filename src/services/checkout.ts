@@ -38,6 +38,6 @@ export async function createCheckoutSession({ callbackDomain, items }: CheckoutP
     // eslint-disable-next-line no-console
     console.error(`🚨 services ~ checkout ~ createCheckoutSession:`, error)
 
-    throw new Error(error)
+    throw error
   }
 }

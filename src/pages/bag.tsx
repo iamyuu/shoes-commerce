@@ -27,17 +27,20 @@ function ButtonPay() {
         data: { items }
       })
 
-      const { redirectToCheckout } = await stripePromise
-      const result = await redirectToCheckout({ sessionId })
+      const stripe = await stripePromise
 
-      if (result.error) {
-        throw result.error
+      if (stripe) {
+        const result = await stripe.redirectToCheckout({ sessionId })
+
+        if (result.error) {
+          throw result.error
+        }
       }
     } catch (error) {
       toast({
         status: 'error',
         title: 'Oops',
-        description: error.message
+        description: (error as Error).message
       })
     } finally {
       setIsSubmitting(false)
