@@ -31,7 +31,7 @@ import { formatCurrency } from 'utils/misc'
 import { useSingleShoes, Color } from 'services/shoes'
 import { addOrUpdate } from 'store/bag'
 
-interface ShoesDetailProps {
+export interface ShoesDetailProps {
   slug?: string
 }
 
