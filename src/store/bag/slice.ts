@@ -50,5 +50,4 @@ const bagSlice = createSlice({
 })
 
 export const { addOrUpdate, remove, setQuantity } = bagSlice.actions
-
-export default bagSlice.reducer
+export const bagReducer = bagSlice.reducer

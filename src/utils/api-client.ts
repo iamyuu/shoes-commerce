@@ -1,10 +1,12 @@
+import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 interface RequestInitClient extends RequestInit {
   data?: Record<string, unknown>
 }
 
-async function request(uri: string, requestInit?: RequestInitClient) {
+async function request(uri: RequestInfo, requestInit?: RequestInitClient) {
   const { data, headers: customHeaders, ...customConfig } = requestInit || {}
 
   const config = {
@@ -23,6 +25,10 @@ async function request(uri: string, requestInit?: RequestInitClient) {
   })
 }
 
-const client = (endpoint: string, requestInit?: RequestInitClient) => request(`${API_URL}${endpoint}`, requestInit)
+export const client = (endpoint: string, requestInit?: RequestInitClient) => request(`${API_URL}${endpoint}`, requestInit)
 
-export { client }
+export const rtkBaseQuery = fetchBaseQuery({
+  baseUrl: API_URL
+  // got an error (`response.clone is not a function`) when using `fetchFn`
+  // fetchFn: (requestInfo, requestInit) => request(requestInfo, requestInit)
+})

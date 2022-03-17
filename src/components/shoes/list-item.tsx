@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useTheme, Box, Text, AspectRatio, Image, SimpleGrid, Skeleton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
-import { useAllShoes, Shoes } from 'services/shoes'
+import { useAllShoesQuery, Shoes } from 'services/shoes'
 import { formatCurrency, slugify } from 'utils/misc'
 
 function ShoesListFallback() {
@@ -61,13 +61,14 @@ function ShoesListItem(props: Shoes) {
 }
 
 export function ShoesList() {
-  const { allShoes, loading, error } = useAllShoes()
+  const { data: allShoes, isLoading, error } = useAllShoesQuery()
+  console.log(`🚀 ~ ShoesList ~ error`, error)
 
   if (error) {
     throw error
   }
 
-  if (loading) {
+  if (isLoading) {
     return <ShoesListFallback />
   }
 
