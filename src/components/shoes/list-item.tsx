@@ -62,7 +62,6 @@ function ShoesListItem(props: Shoes) {
 
 export function ShoesList() {
   const { data: allShoes, isLoading, error } = useAllShoesQuery()
-  console.log(`🚀 ~ ShoesList ~ error`, error)
 
   if (error) {
     throw error

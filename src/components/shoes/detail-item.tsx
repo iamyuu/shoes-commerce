@@ -114,7 +114,7 @@ function ChooseColor(props: ChooseColorProps) {
 
 export function ShoesDetail(props: ShoesDetailProps) {
   const dispatch = useDispatch()
-  const { data: shoes, isLoading, error } = useDetailShoesQuery(props?.slug ?? '', { skip: !!props?.slug })
+  const { data: shoes, isLoading, error } = useDetailShoesQuery(props?.slug ?? '')
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
 
   if (error) {
