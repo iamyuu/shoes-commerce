@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   return (
     <Page>
       <PageHeader>New Release</PageHeader>
-      <ErrorBoundary>
+      <ErrorBoundary resetKeys={[router.query.shoes]}>
         <ShoesList />
 
         <Modal isOpen={!!router.query.shoes} onClose={() => router.push('/')}>
