@@ -26,7 +26,7 @@ import { CheckIcon } from '@chakra-ui/icons'
 import { Radio, RadioButton } from 'components/ui/radio'
 import { PlayIcon, DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
-import { useSingleShoes, Color } from 'services/shoes'
+import { useDetailShoesQuery, Color } from 'services/shoes'
 import { addOrUpdate } from 'store/bag'
 
 export interface ShoesDetailProps {
@@ -114,7 +114,7 @@ function ChooseColor(props: ChooseColorProps) {
 
 export function ShoesDetail(props: ShoesDetailProps) {
   const dispatch = useDispatch()
-  const { shoes, loading, error } = useSingleShoes(props?.slug)
+  const { data: shoes, isLoading, error } = useDetailShoesQuery(props?.slug ?? '', { skip: !!props?.slug })
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
 
   if (error) {
@@ -137,35 +137,37 @@ export function ShoesDetail(props: ShoesDetailProps) {
       return
     }
 
-    const newItem = {
-      ...shoes,
-      quantity: 1,
-      selectedSize: chooseSize.value,
-      selectedColor: chooseColor.value
+    if (shoes) {
+      const newItem = {
+        ...shoes,
+        quantity: 1,
+        selectedSize: chooseSize.value,
+        selectedColor: chooseColor.value
+      }
+
+      dispatch(addOrUpdate({ newItem }))
+
+      toast({
+        status: 'success',
+        title: 'Success',
+        description: 'Added to bag'
+      })
     }
-
-    dispatch(addOrUpdate({ newItem }))
-
-    toast({
-      status: 'success',
-      title: 'Success',
-      description: 'Added to bag'
-    })
   }
 
   return (
     <form onSubmit={handleAddToBag} noValidate>
       <Flex direction={['column', null, null, 'row']}>
         <Box>
-          <Skeleton isLoaded={!loading}>
-            <Image alt={shoes.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" mx="auto" />
+          <Skeleton isLoaded={!isLoading}>
+            <Image alt={shoes?.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" mx="auto" />
           </Skeleton>
 
           <SimpleGrid minChildWidth={['50px', '100px']} spacing="20px" mt={['20px', null, '40px', '20px']} mb="40px">
             {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} isLoaded={!loading}>
+              <Skeleton key={i} isLoaded={!isLoading}>
                 <AspectRatio ratio={4 / 3}>
-                  <Image src={`/images/shoes/image-detail-${i + 1}.jpg`} alt={`${shoes.name} image ${i}`} />
+                  <Image src={`/images/shoes/image-detail-${i + 1}.jpg`} alt={`${shoes?.name} image ${i}`} />
                 </AspectRatio>
               </Skeleton>
             ))}
@@ -180,19 +182,19 @@ export function ShoesDetail(props: ShoesDetailProps) {
           w={['full', null, null, null, '50%']}
           maxW={['full', null, null, '640px']}
         >
-          <Skeleton isLoaded={!loading} w={['40%', '25%']}>
+          <Skeleton isLoaded={!isLoading} w={['40%', '25%']}>
             <Text aria-label="shoes category" as="small" fontSize="16px" fontWeight="400">
-              {shoes.category}
+              {shoes?.category}
             </Text>
           </Skeleton>
 
-          <Skeleton isLoaded={!loading} my={2}>
+          <Skeleton isLoaded={!isLoading} my={2}>
             <Heading aria-label="shoes name" as="h1" fontSize="50px" fontWeight="bold">
-              {shoes.name}
+              {shoes?.name}
             </Heading>
           </Skeleton>
 
-          {loading ? (
+          {isLoading ? (
             <>
               <Skeleton h="18px" mb={2} />
               <Skeleton h="18px" mb={2} />
@@ -200,40 +202,40 @@ export function ShoesDetail(props: ShoesDetailProps) {
             </>
           ) : (
             <Text aria-label="shoes description" textTransform="initial" fontSize="18px" fontWeight="400">
-              {shoes.description}
+              {shoes?.description}
             </Text>
           )}
 
           <Box mt="20px" mb="38px">
-            {!loading && <PlayVideo title={shoes.name} source={shoes.video} />}
+            {!isLoading && <PlayVideo title={shoes?.name} source={shoes?.video} />}
           </Box>
 
           <Text color="brand.black" fontSize="18px" mb="20px">
             Select Size (US)
           </Text>
 
-          {loading ? (
+          {isLoading ? (
             <Flex direction="row">
               {[...Array(5)].map((_, i) => (
                 <Skeleton key={i} mx={1} w="50px" h="50px" />
               ))}
             </Flex>
           ) : (
-            <RadioButton name="choose-size" options={shoes.sizes} borderWidth="1px" />
+            <RadioButton name="choose-size" options={shoes?.sizes ?? []} borderWidth="1px" />
           )}
 
           <Text color="brand.black" fontSize="18px" mb="20px" mt="40px">
             Select Color
           </Text>
 
-          {loading ? (
+          {isLoading ? (
             <Flex direction="row">
               {[...Array(5)].map((_, i) => (
                 <SkeletonCircle key={i} mx={1} size="12" />
               ))}
             </Flex>
           ) : (
-            <ChooseColor colors={shoes.colors} />
+            <ChooseColor colors={shoes?.colors ?? []} />
           )}
         </Flex>
       </Flex>
@@ -246,8 +248,8 @@ export function ShoesDetail(props: ShoesDetailProps) {
           </Text>
         </Flex>
 
-        <Button type="submit" isDisabled={loading} w={['full', null, 'initial']}>
-          add to bag — {formatCurrency.format(shoes.price)}
+        <Button type="submit" isDisabled={isLoading} w={['full', null, 'initial']}>
+          add to bag — {shoes ? formatCurrency.format(shoes.price) : '-'}
           <ArrowLongRightIcon ml={6} fontSize="2rem" position="relative" top="25%" />
         </Button>
       </Flex>

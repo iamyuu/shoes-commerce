@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
+import { shoesApi } from 'services/shoes'
 import storage from 'redux-persist/lib/storage'
-import thunk from 'redux-thunk'
 import reducer from './reducer'
 
 const persistConfig = {
@@ -13,7 +13,13 @@ const persistConfig = {
 export const store = configureStore({
   reducer: persistReducer(persistConfig, reducer),
   devTools: process.env.NODE_ENV !== 'production',
-  middleware: [thunk]
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      thunk: true,
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST']
+      }
+    }).concat(shoesApi.middleware)
 })
 
 export const persistor = persistStore(store)

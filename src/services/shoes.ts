@@ -1,4 +1,5 @@
-import useSWR from 'swr'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { rtkBaseQuery } from 'utils/api-client'
 
 export interface Shoes {
   name: string
@@ -15,32 +16,18 @@ export interface Color {
   color_hash: string
 }
 
-const loadingShoes: Shoes = {
-  name: `Loading shoes`,
-  price: 0,
-  description: `Loading shoes`,
-  category: `loading`,
-  video: ``,
-  sizes: [],
-  colors: []
-}
+export const shoesApi = createApi({
+  reducerPath: 'shoesApi',
+  tagTypes: ['Shoes'],
+  baseQuery: rtkBaseQuery,
+  endpoints: build => ({
+    allShoes: build.query<Shoes[], void>({
+      query: () => `/shoes`
+    }),
+    detailShoes: build.query<Shoes, string>({
+      query: slug => `/shoes/${slug}`
+    })
+  })
+})
 
-export function useAllShoes() {
-  const { data, ...result } = useSWR<Shoes[], Error>(`/shoes`)
-
-  return {
-    ...result,
-    loading: !data,
-    allShoes: data
-  }
-}
-
-export function useSingleShoes(slug?: string) {
-  const { data, ...result } = useSWR<Shoes, Error>(slug ? `/shoes/${slug}` : null)
-
-  return {
-    ...result,
-    loading: !data,
-    shoes: data || loadingShoes
-  }
-}
+export const { useAllShoesQuery, useDetailShoesQuery } = shoesApi
