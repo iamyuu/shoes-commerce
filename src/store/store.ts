@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { createWrapper } from 'next-redux-wrapper'
 import { persistStore, persistReducer } from 'redux-persist'
 import { shoesApi } from 'services/shoes'
 import storage from 'redux-persist/lib/storage'
@@ -23,5 +24,6 @@ export const store = configureStore({
 })
 
 export const persistor = persistStore(store)
+export const wrapper = createWrapper<RootState>(() => store)
 
 export type RootState = ReturnType<typeof store.getState>

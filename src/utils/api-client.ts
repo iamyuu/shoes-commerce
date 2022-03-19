@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-unfetch'
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -19,7 +20,7 @@ async function request(uri: RequestInfo, requestInit?: RequestInitClient) {
     ...customConfig
   }
 
-  return window.fetch(uri, config).then(async response => {
+  return fetch(uri, config).then(async response => {
     const responseData = await response.json()
     return response.ok ? responseData : Promise.reject(responseData)
   })
@@ -27,8 +28,7 @@ async function request(uri: RequestInfo, requestInit?: RequestInitClient) {
 
 export const client = (endpoint: string, requestInit?: RequestInitClient) => request(`${API_URL}${endpoint}`, requestInit)
 
-export const rtkBaseQuery = fetchBaseQuery({
-  baseUrl: API_URL
-  // got an error (`response.clone is not a function`) when using `fetchFn`
-  // fetchFn: (requestInfo, requestInit) => request(requestInfo, requestInit)
+export const rtkClient = fetchBaseQuery({
+  baseUrl: API_URL,
+  fetchFn: fetch
 })
