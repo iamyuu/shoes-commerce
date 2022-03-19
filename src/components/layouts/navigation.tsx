@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
 import { Flex, Box, Menu, MenuButton, MenuList, MenuItem, useTheme, useMediaQuery } from '@chakra-ui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
@@ -22,6 +23,7 @@ const navigation = [
 
 function ChangeLanguage() {
   const theme = useTheme()
+  const router = useRouter()
   const { t, lang } = useTranslation()
   const [isMobile] = useMediaQuery(`(max-width: ${theme.breakpoints.sm}`)
   const currentLang = isMobile ? lang.toUpperCase() : t(`layout:language-name.${lang}`)
@@ -35,7 +37,9 @@ function ChangeLanguage() {
           </MenuButton>
           <MenuList>
             {locales?.map(lng => (
-              <MenuItem key={lng}>{t(`layout:language-name.${lng}`)}</MenuItem>
+              <MenuItem key={lng} onClick={() => router.replace(router.asPath, router.asPath, { locale: lng })}>
+                {t(`layout:language-name.${lng}`)}
+              </MenuItem>
             ))}
           </MenuList>
         </>

@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import { store, persistor, wrapper } from 'store'
+import { usePersistLocaleCookie } from 'utils/hooks'
 import createEmotionCache from 'utils/emotion-cache'
 import theme from 'theme'
 
@@ -26,6 +27,8 @@ export const AllProvider: React.FC = ({ children }) => (
 )
 
 function CustomApp({ Component, pageProps, router, emotionCache = clientSideEmotionCache }: CustomAppProps) {
+  usePersistLocaleCookie()
+
   return (
     <CacheProvider value={emotionCache}>
       <AllProvider>
