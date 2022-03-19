@@ -32,3 +32,14 @@ export const rtkClient = fetchBaseQuery({
   baseUrl: API_URL,
   fetchFn: fetch
 })
+
+export function sneakerClient(endpoint: string) {
+  const { SNEAKER_API_URL, SNEAKER_API_HOST, SNEAKER_API_KEY } = process.env
+
+  return request(`${SNEAKER_API_URL}/${endpoint}`, {
+    headers: {
+      'x-rapidapi-host': SNEAKER_API_HOST,
+      'x-rapidapi-key': SNEAKER_API_KEY
+    }
+  })
+}
