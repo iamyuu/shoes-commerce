@@ -20,18 +20,6 @@ export const ArrowLongRightIcon = createIcon({
   d: 'M20 4l-4-4v3H0v2h16v3l4-4z'
 })
 
-export const PlayIcon = createIcon({
-  displayName: 'PlayIcon',
-  path: (
-    <path
-      fill="currentColor"
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M0 1.859C0 .649 1.357-.063 2.352.625l9.725 6.716a1.5 1.5 0 01-.085 2.523l-9.725 5.787A1.5 1.5 0 010 14.36V1.86z"
-    />
-  )
-})
-
 export const DeliveryIcon = createIcon({
   displayName: 'DeliveryIcon',
   path: (

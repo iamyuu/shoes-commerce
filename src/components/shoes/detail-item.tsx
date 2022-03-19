@@ -2,7 +2,6 @@ import * as React from 'react'
 import { useDispatch } from 'react-redux'
 import {
   useToast,
-  useDisclosure,
   useRadioGroup,
   HStack,
   Box,
@@ -13,29 +12,18 @@ import {
   AspectRatio,
   Image,
   Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
   Skeleton,
   SkeletonCircle
 } from '@chakra-ui/react'
 import { CheckIcon } from '@chakra-ui/icons'
 import { Radio, RadioButton } from 'components/ui/radio'
-import { PlayIcon, DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
+import { DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
 import { useDetailShoesQuery, Color } from 'services/shoes'
 import { addOrUpdate } from 'store/bag'
 
 export interface ShoesDetailProps {
   slug?: string
-}
-
-interface PlayVideoProps {
-  title?: string
-  source?: string
 }
 
 interface ChooseColorProps {
@@ -50,58 +38,22 @@ interface AddToBagFormElement extends HTMLFormElement {
   readonly elements: FormElements
 }
 
-function PlayVideo(props: PlayVideoProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
-  return (
-    <>
-      <Flex
-        direction="row"
-        mx={['auto', null, 0]}
-        cursor={props?.source ? 'pointer' : 'default'}
-        onClick={props?.source ? onOpen : undefined}
-      >
-        <Box w="4rem" borderRadius="50%" bgColor="rgba(19, 18, 18, 0.05)">
-          <PlayIcon position="relative" left={2} top={1} m={4} fontSize="2rem" color="brand.black" />
-        </Box>
-
-        <Text ml={4} display="flex" alignItems="center" fontSize="20px" fontWeight="400">
-          Play Video
-        </Text>
-      </Flex>
-
-      <Modal size="xl" isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{props?.title}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <AspectRatio maxW="560px" ratio={1}>
-              <iframe title={props?.title} src={props?.source} />
-            </AspectRatio>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
-  )
-}
-
 function ChooseColor(props: ChooseColorProps) {
   const { getRootProps, getRadioProps } = useRadioGroup()
 
   return (
     <HStack {...getRootProps()}>
       {props.colors.map(value => {
-        const radio = getRadioProps({ value: value.color_hash })
+        const radio = getRadioProps({ value: value.colorHash })
 
         return (
           <Radio
             id="choose-color"
             isRounded
             borderWidth={3}
-            key={value.color_hash}
-            bg={value.color_hash}
-            _checked={{ bg: value.color_hash }}
+            key={value.colorHash}
+            bg={value.colorHash}
+            _checked={{ bg: value.colorHash }}
             {...radio}
           >
             {radio.isChecked ? <CheckIcon color="white" /> : null}
@@ -160,18 +112,8 @@ export function ShoesDetail(props: ShoesDetailProps) {
       <Flex direction={['column', null, null, 'row']}>
         <Box>
           <Skeleton isLoaded={!isLoading}>
-            <Image alt={shoes?.name} src="/images/shoes/image-detail-large.jpg" objectFit="cover" mx="auto" />
+            <Image alt={shoes?.name} src={shoes?.image.original} objectFit="cover" mx="auto" />
           </Skeleton>
-
-          <SimpleGrid minChildWidth={['50px', '100px']} spacing="20px" mt={['20px', null, '40px', '20px']} mb="40px">
-            {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} isLoaded={!isLoading}>
-                <AspectRatio ratio={4 / 3}>
-                  <Image src={`/images/shoes/image-detail-${i + 1}.jpg`} alt={`${shoes?.name} image ${i}`} />
-                </AspectRatio>
-              </Skeleton>
-            ))}
-          </SimpleGrid>
         </Box>
 
         <Flex
@@ -184,12 +126,12 @@ export function ShoesDetail(props: ShoesDetailProps) {
         >
           <Skeleton isLoaded={!isLoading} w={['40%', '25%']}>
             <Text aria-label="shoes category" as="small" fontSize="16px" fontWeight="400">
-              {shoes?.category}
+              {shoes?.brand}
             </Text>
           </Skeleton>
 
           <Skeleton isLoaded={!isLoading} my={2}>
-            <Heading aria-label="shoes name" as="h1" fontSize="50px" fontWeight="bold">
+            <Heading aria-label="shoes name" as="h1" fontSize="36px" fontWeight="bold">
               {shoes?.name}
             </Heading>
           </Skeleton>
@@ -205,10 +147,6 @@ export function ShoesDetail(props: ShoesDetailProps) {
               {shoes?.description}
             </Text>
           )}
-
-          <Box mt="20px" mb="38px">
-            {!isLoading && <PlayVideo title={shoes?.name} source={shoes?.video} />}
-          </Box>
 
           <Text color="brand.black" fontSize="18px" mb="20px">
             Select Size (US)
