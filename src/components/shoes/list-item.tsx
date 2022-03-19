@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useTheme, Box, Text, AspectRatio, Image, SimpleGrid, Skeleton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
 import { useAllShoesQuery, Shoes } from 'services/shoes'
-import { formatCurrency, slugify } from 'utils/misc'
+import { formatCurrency } from 'utils/misc'
 
 function ShoesListFallback() {
   return (
@@ -27,7 +27,7 @@ function ShoesListFallback() {
 
 function ShoesListItem(props: Shoes) {
   const theme = useTheme()
-  const slug = slugify(props.name)
+  const slug = props.id
 
   return (
     <NextChakraLink href={`?shoes=${slug}`} as={`/shoes/${slug}`} scroll={false} _hover={{ textTransform: 'none' }}>
@@ -39,7 +39,7 @@ function ShoesListItem(props: Shoes) {
         bg="brand.gray"
         sx={{ '> img': { objectFit: 'contain' } }}
       >
-        <Image src={`/images/shoes/image-5.jpg`} alt={props.name} />
+        <Image src={props.image.thumbnail} alt={props.name} />
       </AspectRatio>
 
       <Box display="flex" mt="20px">
@@ -48,7 +48,7 @@ function ShoesListItem(props: Shoes) {
             {props.name}
           </Text>
           <Text as="small" aria-label="shoes category" fontSize={14} fontWeight={400} color="rgba(0, 0, 0, 0.7)" mt="10px">
-            {props.category}
+            {props.brand}
           </Text>
         </Box>
 
@@ -61,10 +61,11 @@ function ShoesListItem(props: Shoes) {
 }
 
 export function ShoesList() {
-  const { data: allShoes, isLoading, error } = useAllShoesQuery()
+  const { data, isLoading, isError, error } = useAllShoesQuery()
 
-  if (error) {
-    throw error
+  if (isError) {
+    // @ts-expect-error
+    throw new Error(error.message || error.data.message || 'Unknown error')
   }
 
   if (isLoading) {
@@ -73,7 +74,7 @@ export function ShoesList() {
 
   return (
     <SimpleGrid minChildWidth="250px" spacing="24px">
-      {allShoes?.map((shoes, index) => (
+      {data?.items.map((shoes, index) => (
         <ShoesListItem key={index} {...shoes} />
       ))}
     </SimpleGrid>

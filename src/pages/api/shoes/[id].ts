@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSneakers } from 'services/sneaker'
+import { getSneakerById } from 'services/sneaker'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
@@ -7,9 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const results = await getSneakers(req.query)
+    const result = await getSneakerById(req.query.id as string)
 
-    return res.status(200).json(results)
+    return res.status(200).json(result)
   } catch (error: unknown) {
     return res.status(500).json({ message: (error as Error).message })
   }

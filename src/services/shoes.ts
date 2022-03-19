@@ -1,31 +1,26 @@
+import { HYDRATE } from 'next-redux-wrapper'
 import { createApi } from '@reduxjs/toolkit/query/react'
-import { rtkBaseQuery } from 'utils/api-client'
+import { rtkClient } from 'utils/api-client'
+import { Sneaker } from './sneaker'
 
-export interface Shoes {
-  name: string
-  category: string
-  description: string
-  price: number
-  video: string
-  sizes: string[]
-  colors: Color[]
-}
-
-export interface Color {
-  name: string
-  color_hash: string
-}
+export type Shoes = Sneaker
+export type Color = Sneaker['colors'][0]
 
 export const shoesApi = createApi({
   reducerPath: 'shoesApi',
   tagTypes: ['Shoes'],
-  baseQuery: rtkBaseQuery,
+  baseQuery: rtkClient,
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+  },
   endpoints: build => ({
-    allShoes: build.query<Shoes[], void>({
-      query: () => `/shoes`
+    allShoes: build.query<{ count: number; items: Shoes[] }, void>({
+      query: () => `/shoes?limit=15`
     }),
     detailShoes: build.query<Shoes, string>({
-      query: slug => `/shoes/${slug}`
+      query: id => `/shoes/${id}`
     })
   })
 })

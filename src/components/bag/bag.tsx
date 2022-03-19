@@ -115,7 +115,7 @@ function BagTablebody() {
                 />
               </Flex>
 
-              <Image w="150px" h="150px" d={['none', null, 'initial']} alt={item.name} src={`/images/shoes/image-5.jpg`} bg="brand.gray" />
+              <Image w="150px" h="150px" d={['none', null, 'initial']} alt={item.name} src={item.image.thumbnail} bg="brand.gray" />
 
               <NextChakraLink
                 href={slugify(item.name)}
