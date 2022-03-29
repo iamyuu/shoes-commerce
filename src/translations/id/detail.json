@@ -1,0 +1,15 @@
+{
+  "message": {
+    "warning": {
+      "title": "Ups",
+      "description": "Anda harus memilih warna dan ukuran terlebih dahulu"
+    },
+    "success": {
+      "title": "Berhasil",
+      "description": "Ditambahkan ke tas"
+    }
+  },
+  "choose-size": "Pilih Ukuran",
+  "choose-color": "Pilih Warna",
+  "add-to-bag": "Tambahkan ke tas"
+}

@@ -1,147 +1,201 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
+import useTranslation from 'next-translate/useTranslation'
 import {
   Flex,
   Box,
-  Text,
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
+  MenuOptionGroup,
+  MenuItemOption,
   Drawer,
   DrawerOverlay,
   DrawerHeader,
   DrawerContent,
   DrawerCloseButton,
   DrawerBody,
-  useDisclosure,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  useDisclosure
 } from '@chakra-ui/react'
 import { HamburgerIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { BrandIcon, DeliveryIcon, UserIcon } from 'components/icons'
+import { BrandIcon } from 'components/icons'
 import { NextChakraLink } from 'components/helpers'
 import { BagIconWithBadge } from 'components/bag'
+import { navigation, navigationCategory } from 'constants/navigation'
+import i18nConfig from '../../../i18n'
 
-const navigation1 = ['Shipping', 'FAQ', 'Contact']
-const navigation2 = ['new release', 'men', 'women', 'kids', 'customize']
+const { locales } = i18nConfig
+
+function useActiveLink() {
+  const router = useRouter()
+
+  function getActiveLink(link: string) {
+    return router.asPath === link
+  }
+
+  return { getActiveLink }
+}
+
+function ChangeLanguage() {
+  const theme = useTheme()
+  const router = useRouter()
+  const { t, lang } = useTranslation('layout')
+  const [isMobile] = useMediaQuery(`(max-width: ${theme.breakpoints.sm}`)
+  const currentLang = isMobile ? lang.toUpperCase() : t(`language-name.${lang}`)
+
+  function handleChangeLang(lang: string | string[]) {
+    const newLocale = Array.isArray(lang) ? lang[0] : lang
+    router.replace(router.asPath, router.asPath, { locale: newLocale })
+  }
+
+  return (
+    <Menu>
+      {({ isOpen: menuIsOpen }) => (
+        <>
+          <MenuButton px={4} py={2} _hover={{ bg: 'blackAlpha.200' }} _expanded={{ bg: 'blackAlpha.200' }}>
+            {currentLang} {menuIsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          </MenuButton>
+          <MenuList>
+            <MenuOptionGroup type="radio" value={lang} onChange={handleChangeLang}>
+              {locales?.map(lng => (
+                <MenuItemOption key={lng} value={lng}>
+                  {t(`language-name.${lng}`)}
+                </MenuItemOption>
+              ))}
+            </MenuOptionGroup>
+          </MenuList>
+        </>
+      )}
+    </Menu>
+  )
+}
+
+function TopNavigation() {
+  const { t } = useTranslation('layout')
+
+  return (
+    <Flex as="nav" h="full">
+      {navigation.map(navItem => (
+        <NextChakraLink
+          key={navItem.href}
+          href={navItem.href}
+          display="flex"
+          alignItems="center"
+          px={4}
+          py={0}
+          h="full"
+          _hover={{ bg: 'blackAlpha.200' }}
+        >
+          {t(navItem.label)}
+        </NextChakraLink>
+      ))}
+    </Flex>
+  )
+}
+
+function NavigationCategory() {
+  const theme = useTheme()
+  const { t } = useTranslation('layout')
+  const { getActiveLink } = useActiveLink()
+
+  return (
+    <Flex flexGrow={1} justifyContent="center">
+      {navigationCategory.map(navItem => (
+        <Box key={navItem.href} display={['none', null, 'flex']} alignItems="center" h="full">
+          <NextChakraLink
+            href={navItem.href}
+            display="flex"
+            alignItems="center"
+            px={4}
+            py={0}
+            h="full"
+            textTransform="capitalize"
+            borderBottom={getActiveLink(navItem.href) ? `1px solid ${theme.colors.black}` : undefined}
+            _hover={{ bg: 'blackAlpha.200' }}
+          >
+            {t(navItem.label)}
+          </NextChakraLink>
+        </Box>
+      ))}
+    </Flex>
+  )
+}
 
 function DrawerMenu() {
+  const { t } = useTranslation('layout')
+  const { getActiveLink } = useActiveLink()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-    <>
-      <HamburgerIcon px={4} w="full" aria-label="Open menu" onClick={onOpen} />
+    <Box
+      display={['flex', null, 'none']}
+      alignItems="center"
+      w={12}
+      h="full"
+      cursor="pointer"
+      _hover={{ bg: 'blackAlpha.200' }}
+      onClick={onOpen}
+    >
+      <HamburgerIcon px={4} w="full" aria-label="Open menu" />
 
       <Drawer isOpen={isOpen} onClose={onClose} placement="right">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Navigation</DrawerHeader>
+          <DrawerHeader>&nbsp;</DrawerHeader>
           <DrawerBody p="0">
-            {navigation2.map(navItem => (
+            {navigationCategory.map(navItem => (
               <NextChakraLink
-                key={navItem}
-                href="/"
+                key={navItem.href}
+                href={navItem.href}
                 display="flex"
                 alignItems="center"
-                p="1.5rem"
+                px={6}
+                py={4}
                 textTransform="capitalize"
-                _hover={{ bg: 'rgba(255, 255, 255, 0.1)', textDecoration: 'none' }}
+                bg={getActiveLink(navItem.href) ? 'blackAlpha.100' : 'transparent'}
+                _hover={{ bg: 'blackAlpha.200' }}
               >
-                {navItem}
+                {t(navItem.label)}
               </NextChakraLink>
             ))}
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </>
+    </Box>
   )
 }
 
-export default function TopNavigation() {
-  const theme = useTheme()
-  const { pathname } = useRouter()
-  const [isMobile] = useMediaQuery(`(max-width: ${theme.breakpoints.sm}`)
-
+export default function Header() {
   return (
     <header>
       <Box bg="brand.gray">
         <Flex
           alignItems="center"
           justifyContent="space-between"
-          maxWidth="1280px"
+          maxWidth="var(--max-w-container)"
           w="full"
-          h="35px"
+          h={9}
           mx="auto"
-          fontSize="12px"
+          fontSize="0.75rem"
           fontWeight="400"
         >
-          <Flex alignItems="center" w={[null, null, '15%', '20%']} h="full" ml={6}>
-            <Menu>
-              {({ isOpen: menuIsOpen }) => (
-                <>
-                  <MenuButton>
-                    {isMobile ? 'En' : 'English'} {menuIsOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem>English</MenuItem>
-                    <MenuItem>Indonesia</MenuItem>
-                  </MenuList>
-                </>
-              )}
-            </Menu>
+          <Flex alignItems="center" w={[null, null, '15%', '20%']} h="full">
+            <ChangeLanguage />
           </Flex>
 
-          <Text display={['none', null, 'initial']} textAlign="center" textTransform="uppercase">
-            <DeliveryIcon mr={2} />
-            free shipping over $100 purchase
-          </Text>
-
-          <Flex as="nav" h="full">
-            {navigation1.map(navItem => (
-              <NextChakraLink
-                key={navItem}
-                href="/"
-                display="flex"
-                alignItems="center"
-                px={4}
-                py={0}
-                h="full"
-                textTransform="capitalize"
-                _hover={{ textDecoration: 'none' }}
-              >
-                {navItem}
-              </NextChakraLink>
-            ))}
-          </Flex>
+          <TopNavigation />
         </Flex>
       </Box>
 
-      <Flex as="nav" maxWidth="1280px" w="full" h="60px" mx="auto" justifyContent="space-between">
-        <NextChakraLink href="/" display="flex" alignItems="center" w={24} h="full" _hover={{ textDecoration: 'none' }}>
+      <Flex as="nav" maxWidth="var(--max-w-container)" w="full" h={14} mx="auto" justifyContent="space-between">
+        <Flex alignItems="center" w={24} h="full">
           <BrandIcon w={16} h={4} />
-        </NextChakraLink>
-
-        <Flex flexGrow={1} justifyContent="center">
-          {navigation2.map(navItem => (
-            <Box key={navItem} display={['none', null, 'flex']} alignItems="center" h="full">
-              <NextChakraLink
-                href="/"
-                display="flex"
-                alignItems="center"
-                px={4}
-                py={0}
-                h="full"
-                textTransform="capitalize"
-                borderBottom={pathname === '/' && navItem.includes(navigation2[0]) ? `1px solid ${theme.colors.black}` : undefined}
-                _hover={{ textDecoration: 'none' }}
-              >
-                {navItem}
-              </NextChakraLink>
-            </Box>
-          ))}
         </Flex>
+
+        <NavigationCategory />
 
         <Flex>
           <Box alignItems="center" h="full">
@@ -152,31 +206,14 @@ export default function TopNavigation() {
               px={4}
               py={0}
               h="full"
-              fontSize="24px"
-              _hover={{ textDecoration: 'none' }}
+              fontSize="1.5rem"
+              _hover={{ bg: 'blackAlpha.200' }}
             >
               <BagIconWithBadge isNavigation />
             </NextChakraLink>
           </Box>
 
-          <Box alignItems="center" h="full">
-            <NextChakraLink
-              href="/user"
-              display="flex"
-              alignItems="center"
-              px={4}
-              py={0}
-              h="full"
-              fontSize="24px"
-              _hover={{ textDecoration: 'none' }}
-            >
-              <UserIcon aria-label="user" />
-            </NextChakraLink>
-          </Box>
-
-          <Box display={['flex', null, 'none']} alignItems="center" w="48px" h="full">
-            <DrawerMenu />
-          </Box>
+          <DrawerMenu />
         </Flex>
       </Flex>
     </header>

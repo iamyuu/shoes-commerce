@@ -1,5 +1,5 @@
-import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
+import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
 import { wrapper } from 'store'
 import { shoesApi } from 'services/shoes'
@@ -18,27 +18,34 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async () =
   }
 })
 
-const Home: NextPage = () => {
+export default function NewReleasePage() {
   const router = useRouter()
 
   return (
-    <Page>
-      <PageHeader>New Release</PageHeader>
-      <ErrorBoundary resetKeys={[router.query.shoes]}>
-        <ShoesList />
-        <Modal isOpen={!!router.query.shoes} onClose={() => router.push('/')}>
-          <ModalOverlay />
-          <ModalContent maxW="65rem">
-            <ModalHeader>&nbsp;</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <ShoesDetail slug={router.query.shoes as string} />
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-      </ErrorBoundary>
-    </Page>
+    <ErrorBoundary resetKeys={[router.query.shoes]}>
+      <ShoesList />
+      <Modal isOpen={!!router.query.shoes} onClose={() => router.push('/')}>
+        <ModalOverlay />
+        <ModalContent maxW="65rem">
+          <ModalHeader>&nbsp;</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <ShoesDetail slug={router.query.shoes as string} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </ErrorBoundary>
   )
 }
 
-export default Home
+NewReleasePage.getLayout = function NewReleaseLayout(page: React.ReactNode) {
+  const { t } = useTranslation('new-release')
+
+  return (
+    <Page>
+      <PageHeader>{t('title')}</PageHeader>
+
+      {page}
+    </Page>
+  )
+}

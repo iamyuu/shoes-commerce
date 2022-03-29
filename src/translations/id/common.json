@@ -1,0 +1,8 @@
+{
+  "not-found": {
+    "title": "Tidak Ditemukan",
+    "message": "Maaf... tidak ada apa-apa di sini. <link>Pulanglah</link>"
+  },
+  "error": "Ada kesalahan",
+  "unknown-error": "Kesalahan yang tidak diketahui"
+}

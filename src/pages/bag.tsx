@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { Flex, Text, Button, useToast } from '@chakra-ui/react'
 import { BagTable, BagTotal, BagIconWithBadge } from 'components/bag'
@@ -10,10 +9,12 @@ import { loadStripe } from '@stripe/stripe-js'
 import { client } from 'utils/api-client'
 import { selectBagItems } from 'store/bag'
 import { useSelector } from 'react-redux'
+import useTranslation from 'next-translate/useTranslation'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 function ButtonPay() {
+  const { t } = useTranslation('bag')
   const items = useSelector(selectBagItems)
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
@@ -57,34 +58,42 @@ function ButtonPay() {
       onClick={handlePay}
     >
       <Text as="span" textTransform="uppercase">
-        Pay Now
+        {t('pay-now')}
       </Text>
       <ArrowLongRightIcon position="relative" top="20%" fontSize="1.75rem" />
     </Button>
   )
 }
 
-const BagPage: NextPage = () => (
-  <Page>
-    <NextSeo title="Your Bag" />
-
-    <PageHeader>
-      Your Bag
-      <BagIconWithBadge />
-    </PageHeader>
-
+export default function BagPage() {
+  return (
     <ErrorBoundary>
       <BagTable />
 
       <Flex mt={8} flexDirection="column" alignItems="flex-end">
-        <Flex justifyContent="space-between" w={['100%', '40%']} p={4} mb={['10px', '20px']} bg="brand.gray">
+        <Flex justifyContent="space-between" w={['100%', '40%']} p={4} mb={[2.5, 5]} bg="brand.gray">
           <BagTotal />
         </Flex>
 
         <ButtonPay />
       </Flex>
     </ErrorBoundary>
-  </Page>
-)
+  )
+}
 
-export default BagPage
+BagPage.getLayout = function BagLayout(page: React.ReactNode) {
+  const { t } = useTranslation('bag')
+
+  return (
+    <Page>
+      <NextSeo title={t('title')} />
+
+      <PageHeader>
+        {t('title')}
+        <BagIconWithBadge />
+      </PageHeader>
+
+      {page}
+    </Page>
+  )
+}

@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { useTheme, Box, Text, AspectRatio, Image, SimpleGrid, Skeleton } from '@chakra-ui/react'
-import { NextChakraLink } from 'components/helpers'
+import useTranslation from 'next-translate/useTranslation'
+import NextLink from 'next/link'
+import { useTheme, Box, Text, AspectRatio, Image, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
 import { useAllShoesQuery, Shoes } from 'services/shoes'
 import { formatCurrency } from 'utils/misc'
 
@@ -30,7 +31,7 @@ function ShoesListItem(props: Shoes) {
   const slug = props.id
 
   return (
-    <NextChakraLink href={`?shoes=${slug}`} as={`/shoes/${slug}`} scroll={false} _hover={{ textTransform: 'none' }}>
+    <LinkBox _hover={{ textTransform: 'none' }}>
       <AspectRatio
         maxWidth="full"
         height="350px"
@@ -42,30 +43,35 @@ function ShoesListItem(props: Shoes) {
         <Image src={props.image.thumbnail} alt={props.name} />
       </AspectRatio>
 
-      <Box display="flex" mt="20px">
+      <Box display="flex" mt={5}>
         <Box display="flex" flexDirection="column" flexGrow={1}>
-          <Text as="span" aria-label="shoes name" fontSize={18} color={theme.colors.brand.black}>
-            {props.name}
-          </Text>
-          <Text as="small" aria-label="shoes category" fontSize={14} fontWeight={400} color="rgba(0, 0, 0, 0.7)" mt="10px">
+          <NextLink href={`?shoes=${slug}`} as={`/shoes/${slug}`} scroll={false} passHref>
+            <LinkOverlay>
+              <Text as="span" aria-label="shoes name" fontSize={18} color={theme.colors.brand.black}>
+                {props.name}
+              </Text>
+            </LinkOverlay>
+          </NextLink>
+          <Text as="small" aria-label="shoes category" fontSize={14} fontWeight={400} color="blackAlpha.800" mt={2.5}>
             {props.brand}
           </Text>
         </Box>
 
-        <Text as="span" aria-label="shoes price" fontSize={18} fontWeight={400} color="rgba(0, 0, 0, 0.7)">
+        <Text as="span" aria-label="shoes price" fontSize={18} fontWeight={400} color="blackAlpha.800">
           {formatCurrency.format(props.price)}
         </Text>
       </Box>
-    </NextChakraLink>
+    </LinkBox>
   )
 }
 
 export function ShoesList() {
+  const { t } = useTranslation()
   const { data, isLoading, isError, error } = useAllShoesQuery()
 
   if (isError) {
     // @ts-expect-error
-    throw new Error(error.message || error.data.message || 'Unknown error')
+    throw new Error(error.message || error.data.message || t('common:unknown-error'))
   }
 
   if (isLoading) {

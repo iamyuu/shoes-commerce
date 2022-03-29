@@ -1,3 +1,5 @@
+import useTranslation from 'next-translate/useTranslation'
+import Trans from 'next-translate/Trans'
 import { Box, Text } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
 import {
@@ -12,17 +14,24 @@ export function NotFound() {
   return (
     <>
       <Text fontSize="1.25rem" textAlign="center">
-        Sorry... nothing here. {` `}
-        <NextChakraLink href="/">Go home</NextChakraLink>
+        <Trans
+          ns="common"
+          i18nKey="not-found.message"
+          components={{
+            link: <NextChakraLink href="/" />
+          }}
+        />
       </Text>
     </>
   )
 }
 
 export function ErrorFallback(props: FallbackProps) {
+  const { t } = useTranslation('common')
+
   return (
     <Box role="alert" textAlign="center">
-      There was an error: <pre>{props.error.message}</pre>
+      {t('error')}: <pre>{props.error.message}</pre>
     </Box>
   )
 }
