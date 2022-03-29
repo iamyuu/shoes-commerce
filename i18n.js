@@ -4,6 +4,10 @@ module.exports = {
   defaultLocale: 'en',
   loadLocaleFrom: (lang, ns) => import(`./src/translations/${lang}/${ns}.json`).then(m => m.default),
   pages: {
-    '*': ['layout']
+    '*': ['layout', 'common'],
+    '/': ['new-release'],
+    'rgx:^/shoes': ['detail'],
+    '/bag': ['bag'],
+    '/payment-success': ['payment-success']
   }
 }

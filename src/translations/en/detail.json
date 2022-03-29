@@ -1,0 +1,15 @@
+{
+  "message": {
+    "warning": {
+      "title": "Oops",
+      "description": "You need choose color and size first"
+    },
+    "success": {
+      "title": "Success",
+      "description": "Added to bag"
+    }
+  },
+  "choose-size": "Select Size",
+  "choose-color": "Select Color",
+  "add-to-bag": "Add to bag"
+}

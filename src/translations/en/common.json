@@ -1,0 +1,8 @@
+{
+  "not-found": {
+    "title": "Not Found",
+    "message": "Sorry... nothing here. <link>Go home</link>"
+  },
+  "error": "There was an error",
+  "unknown-error": "Unknown error"
+}

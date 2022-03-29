@@ -1,23 +1,10 @@
 import * as React from 'react'
+import useTranslation from 'next-translate/useTranslation'
 import { useDispatch } from 'react-redux'
-import {
-  useToast,
-  useRadioGroup,
-  HStack,
-  Box,
-  Flex,
-  SimpleGrid,
-  Heading,
-  Text,
-  AspectRatio,
-  Image,
-  Button,
-  Skeleton,
-  SkeletonCircle
-} from '@chakra-ui/react'
+import { useToast, useRadioGroup, HStack, Box, Flex, Heading, Text, Image, Button, Skeleton, SkeletonCircle } from '@chakra-ui/react'
 import { CheckIcon } from '@chakra-ui/icons'
 import { Radio, RadioButton } from 'components/ui/radio'
-import { DeliveryIcon, ArrowLongRightIcon } from 'components/icons'
+import { ArrowLongRightIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
 import { useDetailShoesQuery, Color } from 'services/shoes'
 import { addOrUpdate } from 'store/bag'
@@ -66,6 +53,7 @@ function ChooseColor(props: ChooseColorProps) {
 
 export function ShoesDetail(props: ShoesDetailProps) {
   const dispatch = useDispatch()
+  const { t } = useTranslation('detail')
   const { data: shoes, isLoading, error } = useDetailShoesQuery(props?.slug ?? '')
   const toast = useToast({ duration: 5000, isClosable: true, position: 'bottom' })
 
@@ -82,8 +70,8 @@ export function ShoesDetail(props: ShoesDetailProps) {
     if (!chooseColor.value || !chooseSize.value) {
       toast({
         status: 'warning',
-        title: 'Oops',
-        description: 'You need choose color and size first'
+        title: t('message.warning.title'),
+        description: t('message.warning.description')
       })
 
       return
@@ -101,8 +89,8 @@ export function ShoesDetail(props: ShoesDetailProps) {
 
       toast({
         status: 'success',
-        title: 'Success',
-        description: 'Added to bag'
+        title: t('message.success.title'),
+        description: t('message.success.description')
       })
     }
   }
@@ -148,8 +136,8 @@ export function ShoesDetail(props: ShoesDetailProps) {
             </Text>
           )}
 
-          <Text color="brand.black" fontSize="18px" mb="20px">
-            Select Size (US)
+          <Text color="brand.black" fontSize="18px" mb="20px" textTransform="capitalize">
+            {t('choose-size')} (US)
           </Text>
 
           {isLoading ? (
@@ -163,7 +151,7 @@ export function ShoesDetail(props: ShoesDetailProps) {
           )}
 
           <Text color="brand.black" fontSize="18px" mb="20px" mt="40px">
-            Select Color
+            {t('choose-color')}
           </Text>
 
           {isLoading ? (
@@ -178,19 +166,10 @@ export function ShoesDetail(props: ShoesDetailProps) {
         </Flex>
       </Flex>
 
-      <Flex direction="row" flexWrap="wrap" alignItems="center" bg="brand.gray" p={['.5rem', '.75rem', '1rem']} mt="40px">
-        <Flex justifyContent={['center', null, 'start']} alignItems="center" flexGrow={1} mb={['1rem', null, 0]}>
-          <DeliveryIcon w="20px" h="20px" position="relative" top="2px" mr="10px" />
-          <Text as="span" textTransform="uppercase" fontSize="12px" fontWeight={400}>
-            free shipping over $100 purchase
-          </Text>
-        </Flex>
-
-        <Button type="submit" isDisabled={isLoading} w={['full', null, 'initial']}>
-          add to bag — {shoes ? formatCurrency.format(shoes.price) : '-'}
-          <ArrowLongRightIcon ml={6} fontSize="2rem" position="relative" top="25%" />
-        </Button>
-      </Flex>
+      <Button type="submit" isDisabled={isLoading} w={['full', null, 'initial']} float="right" mt="40px">
+        {t('add-to-bag')} — {shoes ? formatCurrency.format(shoes.price) : '-'}
+        <ArrowLongRightIcon ml={6} fontSize="2rem" position="relative" top="25%" />
+      </Button>
     </form>
   )
 }

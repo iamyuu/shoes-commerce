@@ -1,4 +1,6 @@
 import * as React from 'react'
+import Trans from 'next-translate/Trans'
+import useTranslation from 'next-translate/useTranslation'
 import { useDispatch, useSelector } from 'react-redux'
 import type { StringOrNumber } from '@chakra-ui/utils'
 import { Box, Flex, Text, Table, Thead, Tbody, Tr, Th, Td, Image, NumberInput, NumberInputField, CloseButton } from '@chakra-ui/react'
@@ -43,12 +45,13 @@ export function BagIconWithBadge({ isNavigation = false }) {
 }
 
 export function BagTotal() {
+  const { t } = useTranslation('bag')
   const total = useSelector(selectBagTotal)
 
   return (
     <>
       <Text as="span" textTransform="uppercase">
-        Total
+        {t('total')}
       </Text>
       <Text as="span">{formatCurrency.format(total)}</Text>
     </>
@@ -88,10 +91,13 @@ function BagTablebody() {
       <Tbody>
         <Tr>
           <Td colSpan={4} textAlign="center">
-            Your bag is empty. Check the {` `}
-            <NextChakraLink href="/" fontWeight={500}>
-              available shoes
-            </NextChakraLink>
+            <Trans
+              ns="bag"
+              i18nKey="empty-state"
+              components={{
+                link: <NextChakraLink href="/" fontWeight={500} />
+              }}
+            />
           </Td>
         </Tr>
       </Tbody>
@@ -153,22 +159,24 @@ function BagTablebody() {
 }
 
 export function BagTable() {
+  const { t } = useTranslation('bag')
+
   return (
     <Box overflowX="auto">
       <Table variant="simple">
         <Thead bg="brand.gray">
           <Tr>
             <Th fontWeight={500} minW="15rem" textAlign="center">
-              Product
+              {t('product')}
             </Th>
             <Th fontWeight={500} w="10%">
-              Price
+              {t('price')}
             </Th>
             <Th fontWeight={500} w="10%">
-              Quantity
+              {t('quantity')}
             </Th>
             <Th fontWeight={500} w="10%">
-              Total
+              {t('total')}
             </Th>
           </Tr>
         </Thead>
