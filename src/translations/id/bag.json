@@ -5,5 +5,7 @@
   "empty-state": "Tas Anda kosong. Periksa <link>sepatu yang tersedia</link> untuk menambahkan barang ke tas Anda.",
   "product": "Produk",
   "price": "Harga",
-  "quantity": "Kuantitas"
+  "quantity": "Kuantitas",
+  "color": "Warna",
+  "size": "Ukuran"
 }

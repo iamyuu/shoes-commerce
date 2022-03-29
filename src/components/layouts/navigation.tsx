@@ -175,7 +175,7 @@ export default function Header() {
         <Flex
           alignItems="center"
           justifyContent="space-between"
-          maxWidth="1200px"
+          maxWidth="var(--max-w-container)"
           w="full"
           h={9}
           mx="auto"
@@ -190,7 +190,7 @@ export default function Header() {
         </Flex>
       </Box>
 
-      <Flex as="nav" maxWidth="1200px" w="full" h={14} mx="auto" justifyContent="space-between">
+      <Flex as="nav" maxWidth="var(--max-w-container)" w="full" h={14} mx="auto" justifyContent="space-between">
         <Flex alignItems="center" w={24} h="full">
           <BrandIcon w={16} h={4} />
         </Flex>

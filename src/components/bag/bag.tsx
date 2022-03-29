@@ -24,8 +24,8 @@ export function BagIconWithBadge({ isNavigation = false }) {
       {count >= 1 && (
         <Box
           position="absolute"
-          top={isNavigation ? 0 : '6px'}
-          right={isNavigation ? 0 : '12px'}
+          top={isNavigation ? 0 : 1.5}
+          right={isNavigation ? 0 : 3}
           background="red.500"
           color="white"
           borderRadius="50%"
@@ -70,6 +70,7 @@ function InputQuantity(props: InputQuantityProps) {
       min={1}
       bg="brand.gray"
       borderColor="brand.gray"
+      focusBorderColor="black"
       defaultValue={props.defaultValue}
       onChange={value => handleChangeQuantity(value, props.index)}
     >
@@ -79,6 +80,7 @@ function InputQuantity(props: InputQuantityProps) {
 }
 
 function BagTablebody() {
+  const { t } = useTranslation('bag')
   const dispatch = useDispatch()
   const items = useSelector(selectBagItems)
 
@@ -109,7 +111,7 @@ function BagTablebody() {
       {items.map((item, i) => (
         <Tr key={i}>
           <Td>
-            <Flex fontSize="16px">
+            <Flex fontSize="1rem">
               <Flex alignItems="center" mr={[0, null, 8, 12]}>
                 <CloseButton
                   size="sm"
@@ -123,35 +125,29 @@ function BagTablebody() {
 
               <Image w="150px" h="150px" d={['none', null, 'initial']} alt={item.name} src={item.image.thumbnail} bg="brand.gray" />
 
-              <NextChakraLink
-                href={slugify(item.name)}
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                ml={2}
-                _hover={{ textDecoration: 'none' }}
-              >
-                <Text as="span" w="full" fontWeight={600}>
+              <Flex flexDirection="column" justifyContent="center" alignItems="center" ml={2}>
+                <NextChakraLink href={`/shoes/${item.id}`} w="full" fontWeight={600}>
                   {item.name}
-                </Text>
+                </NextChakraLink>
                 <Flex flexDirection={['column', 'row']} w="full">
-                  <Text as="span">Size: {item.selectedSize}</Text>
-                  <Text as="span" ml={[0, '20px']}>
-                    Color
-                    <Box display="inline-block" w={3} h={3} ml="10px" bg={item.selectedColor} />
+                  <Text as="span">
+                    {t('size')}: {item.selectedSize}
+                  </Text>
+                  <Text as="span" ml={[0, 5]}>
+                    {t('color')}:
+                    <Box display="inline-block" w={3} h={3} ml={2.5} bg={item.selectedColor} />
                   </Text>
                 </Flex>
-              </NextChakraLink>
+              </Flex>
             </Flex>
           </Td>
-          <Td fontSize="18px" fontWeight={400}>
+          <Td fontSize="1rem" fontWeight={400}>
             {formatCurrency.format(item.price)}
           </Td>
-          <Td fontSize="18px">
+          <Td fontSize="1rem">
             <InputQuantity index={i} defaultValue={item.quantity} />
           </Td>
-          <Td fontSize="18px">{formatCurrency.format(item.price * item.quantity)}</Td>
+          <Td fontSize="1rem">{formatCurrency.format(item.price * item.quantity)}</Td>
         </Tr>
       ))}
     </Tbody>

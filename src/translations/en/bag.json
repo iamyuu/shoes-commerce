@@ -5,5 +5,7 @@
   "empty-state": "Your bag is empty. Check the <link>available shoes</link> to add items to your bag.",
   "product": "Product",
   "price": "Price",
-  "quantity": "Quantity"
+  "quantity": "Quantity",
+  "color": "Color",
+  "size": "Size"
 }

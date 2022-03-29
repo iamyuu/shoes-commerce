@@ -21,9 +21,14 @@ const colors = {
   }
 }
 
+const shadows = {
+  outline: `0 0 0 1px ${colors.brand.black}`
+}
+
 export default extendTheme({
   config,
   fonts,
   colors,
+  shadows,
   components
 })

@@ -1,5 +1,7 @@
 :host,
 :root {
+  --max-w-container: 1280px;
+
   --colors-brand-black: #131212;
   --colors-brand-gray: #f6f6f6;
 }

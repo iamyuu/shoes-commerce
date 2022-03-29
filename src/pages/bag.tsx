@@ -71,7 +71,7 @@ export default function BagPage() {
       <BagTable />
 
       <Flex mt={8} flexDirection="column" alignItems="flex-end">
-        <Flex justifyContent="space-between" w={['100%', '40%']} p={4} mb={['10px', '20px']} bg="brand.gray">
+        <Flex justifyContent="space-between" w={['100%', '40%']} p={4} mb={[2.5, 5]} bg="brand.gray">
           <BagTotal />
         </Flex>
 

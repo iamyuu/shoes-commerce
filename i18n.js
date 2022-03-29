@@ -5,7 +5,7 @@ module.exports = {
   loadLocaleFrom: (lang, ns) => import(`./src/translations/${lang}/${ns}.json`).then(m => m.default),
   pages: {
     '*': ['layout', 'common'],
-    '/': ['new-release'],
+    '/': ['new-release', 'detail'],
     'rgx:^/shoes': ['detail'],
     '/bag': ['bag'],
     '/payment-success': ['payment-success']

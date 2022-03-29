@@ -1,7 +1,7 @@
 const ButtonComponents = {
   baseStyle: {
     fontWeight: 600,
-    fontSize: '16px',
+    fontSize: '1rem',
     textTransform: 'uppercase'
   },
   variants: {

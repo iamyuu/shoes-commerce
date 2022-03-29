@@ -1,7 +1,7 @@
 import * as React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import { useDispatch } from 'react-redux'
-import { useToast, useRadioGroup, HStack, Box, Flex, Heading, Text, Image, Button, Skeleton, SkeletonCircle } from '@chakra-ui/react'
+import { useToast, useRadioGroup, HStack, Stack, Box, Flex, Heading, Text, Image, Button, Skeleton, SkeletonCircle } from '@chakra-ui/react'
 import { CheckIcon } from '@chakra-ui/icons'
 import { Radio, RadioButton } from 'components/ui/radio'
 import { ArrowLongRightIcon } from 'components/icons'
@@ -97,77 +97,84 @@ export function ShoesDetail(props: ShoesDetailProps) {
 
   return (
     <form onSubmit={handleAddToBag} noValidate>
-      <Flex direction={['column', null, null, 'row']}>
+      <Flex direction={['column', null, null, 'row']} mb={10}>
         <Box>
           <Skeleton isLoaded={!isLoading}>
             <Image alt={shoes?.name} src={shoes?.image.original} objectFit="cover" mx="auto" />
           </Skeleton>
         </Box>
 
-        <Flex
+        <Stack
+          spacing={8}
           direction="column"
           textTransform="uppercase"
-          pt={['0px', '2.5rem']}
+          pt={[0, '2.5rem']}
           px={[0, null, '2.5rem', '5.5rem']}
           w={['full', null, null, null, '50%']}
           maxW={['full', null, null, '640px']}
         >
-          <Skeleton isLoaded={!isLoading} w={['40%', '25%']}>
-            <Text aria-label="shoes category" as="small" fontSize="16px" fontWeight="400">
-              {shoes?.brand}
+          <section id="information">
+            <Skeleton isLoaded={!isLoading} w={['40%', '25%']}>
+              <Text aria-label="shoes category" as="small" fontSize="1rem" fontWeight="400">
+                {shoes?.brand}
+              </Text>
+            </Skeleton>
+
+            <Skeleton isLoaded={!isLoading} my={2}>
+              <Heading aria-label="shoes name" as="h1" fontSize="2.25rem" fontWeight="bold">
+                {shoes?.name}
+              </Heading>
+            </Skeleton>
+
+            {isLoading ? (
+              <>
+                <Skeleton h="1rem" mb={2} />
+                <Skeleton h="1rem" mb={2} />
+                <Skeleton h="1rem" w="80%" />
+              </>
+            ) : (
+              <Text aria-label="shoes description" textTransform="initial" fontSize="1rem" fontWeight="400">
+                {shoes?.description}
+              </Text>
+            )}
+          </section>
+
+          <Stack id="choose size" as="section" spacing={3}>
+            <Text color="brand.black" fontSize="1rem" textTransform="capitalize">
+              {t('choose-size')} (US)
             </Text>
-          </Skeleton>
 
-          <Skeleton isLoaded={!isLoading} my={2}>
-            <Heading aria-label="shoes name" as="h1" fontSize="36px" fontWeight="bold">
-              {shoes?.name}
-            </Heading>
-          </Skeleton>
+            {isLoading ? (
+              <Flex direction="row">
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} mx={1} w="50px" h="50px" />
+                ))}
+              </Flex>
+            ) : (
+              <RadioButton name="choose-size" options={shoes?.sizes ?? []} borderWidth="1px" />
+            )}
+          </Stack>
 
-          {isLoading ? (
-            <>
-              <Skeleton h="18px" mb={2} />
-              <Skeleton h="18px" mb={2} />
-              <Skeleton h="18px" w="80%" />
-            </>
-          ) : (
-            <Text aria-label="shoes description" textTransform="initial" fontSize="18px" fontWeight="400">
-              {shoes?.description}
+          <Stack id="choose color" as="section" spacing={3}>
+            <Text color="brand.black" fontSize="1rem">
+              {t('choose-color')}
             </Text>
-          )}
 
-          <Text color="brand.black" fontSize="18px" mb="20px" textTransform="capitalize">
-            {t('choose-size')} (US)
-          </Text>
-
-          {isLoading ? (
-            <Flex direction="row">
-              {[...Array(5)].map((_, i) => (
-                <Skeleton key={i} mx={1} w="50px" h="50px" />
-              ))}
-            </Flex>
-          ) : (
-            <RadioButton name="choose-size" options={shoes?.sizes ?? []} borderWidth="1px" />
-          )}
-
-          <Text color="brand.black" fontSize="18px" mb="20px" mt="40px">
-            {t('choose-color')}
-          </Text>
-
-          {isLoading ? (
-            <Flex direction="row">
-              {[...Array(5)].map((_, i) => (
-                <SkeletonCircle key={i} mx={1} size="12" />
-              ))}
-            </Flex>
-          ) : (
-            <ChooseColor colors={shoes?.colors ?? []} />
-          )}
-        </Flex>
+            {isLoading ? (
+              <Flex direction="row">
+                {[...Array(5)].map((_, i) => (
+                  <SkeletonCircle key={i} mx={1} size="12" />
+                ))}
+              </Flex>
+            ) : (
+              <ChooseColor colors={shoes?.colors ?? []} />
+            )}
+          </Stack>
+        </Stack>
       </Flex>
 
-      <Button type="submit" isDisabled={isLoading} w={['full', null, 'initial']} float="right" mt="40px">
-        {t('add-to-bag')} — {shoes ? formatCurrency.format(shoes.price) : '-'}
+      <Button type="submit" isDisabled={isLoading} w={['full', null, 'initial']} float="right">
+        {t('add-to-bag')} {shoes ? `— ${formatCurrency.format(shoes.price)}` : ''}
         <ArrowLongRightIcon ml={6} fontSize="2rem" position="relative" top="25%" />
       </Button>
     </form>
