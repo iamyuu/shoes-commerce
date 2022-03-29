@@ -1,0 +1,19 @@
+:host,
+:root {
+  --colors-brand-black: #131212;
+  --colors-brand-gray: #f6f6f6;
+}
+
+/* override nprogress.css */
+#nprogress .bar {
+  background: var(--colors-brand-black) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 0.625rem var(--colors-brand-black), 0 0 0.3125rem var(--colors-brand-black) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--colors-brand-black) !important;
+  border-left-color: var(--colors-brand-black) !important;
+}
