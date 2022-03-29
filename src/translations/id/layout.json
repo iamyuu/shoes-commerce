@@ -5,6 +5,11 @@
   },
   "navigation": {
     "about": "Tentang Kami",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "new-release": "Rilis Terbaru",
+    "men": "Pria",
+    "women": "Wanita",
+    "kids": "Anak-anak",
+    "unisex": "Unisex"
   }
 }

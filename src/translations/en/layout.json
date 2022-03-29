@@ -5,6 +5,11 @@
   },
   "navigation": {
     "about": "About Us",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "new-release": "New Release",
+    "men": "Men",
+    "women": "Women",
+    "kids": "Kids",
+    "unisex": "Unisex"
   }
 }
