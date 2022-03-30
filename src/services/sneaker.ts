@@ -1,5 +1,6 @@
 import { sneakerClient } from 'utils/api-client'
-import cache from 'utils/lru-cache'
+
+const cache = new Map()
 
 export type Sneaker = ReturnType<typeof transformSneaker>
 
