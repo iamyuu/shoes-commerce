@@ -58,7 +58,7 @@ function ShoesListItem(props: Shoes) {
         </Box>
 
         <Text as="span" aria-label="shoes price" fontSize={18} fontWeight={400} color="blackAlpha.800">
-          {formatCurrency.format(props.price)}
+          {formatCurrency(props.price)}
         </Text>
       </Box>
     </LinkBox>

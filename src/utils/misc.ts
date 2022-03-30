@@ -1,23 +1,18 @@
-/* eslint-disable no-useless-escape */
-export const formatCurrency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'SGD',
-  minimumFractionDigits: 0
-})
+import router from 'next/router'
+import i18nConfig from '../../i18n'
 
-export function slugify(str: string) {
-  const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
-  const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
-  const p = new RegExp(a.split('').join('|'), 'g')
+const exchangeRate = {
+  SGD: 1.36,
+  IDR: 14.364
+}
 
-  return str
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, '') // Trim - from end of text
+export function formatCurrency(price: number) {
+  const locale = router.locale || i18nConfig.defaultLocale || 'en'
+  const currency = locale === 'en' ? 'SGD' : 'IDR'
+  const finalPrice = exchangeRate[currency] * price
+
+  return finalPrice.toLocaleString(locale, {
+    style: 'currency',
+    currency
+  })
 }

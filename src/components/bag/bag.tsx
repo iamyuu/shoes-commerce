@@ -6,7 +6,7 @@ import type { StringOrNumber } from '@chakra-ui/utils'
 import { Box, Flex, Text, Table, Thead, Tbody, Tr, Th, Td, Image, NumberInput, NumberInputField, CloseButton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
 import { BagIcon } from 'components/icons'
-import { formatCurrency, slugify } from 'utils/misc'
+import { formatCurrency } from 'utils/misc'
 import { remove, setQuantity, selectBagItems, selectBagCount, selectBagTotal } from 'store/bag'
 
 interface InputQuantityProps {
@@ -53,7 +53,7 @@ export function BagTotal() {
       <Text as="span" textTransform="uppercase">
         {t('total')}
       </Text>
-      <Text as="span">{formatCurrency.format(total)}</Text>
+      <Text as="span">{formatCurrency(total)}</Text>
     </>
   )
 }
@@ -142,12 +142,12 @@ function BagTablebody() {
             </Flex>
           </Td>
           <Td fontSize="1rem" fontWeight={400}>
-            {formatCurrency.format(item.price)}
+            {formatCurrency(item.price)}
           </Td>
           <Td fontSize="1rem">
             <InputQuantity index={i} defaultValue={item.quantity} />
           </Td>
-          <Td fontSize="1rem">{formatCurrency.format(item.price * item.quantity)}</Td>
+          <Td fontSize="1rem">{formatCurrency(item.price * item.quantity)}</Td>
         </Tr>
       ))}
     </Tbody>

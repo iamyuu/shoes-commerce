@@ -174,7 +174,7 @@ export function ShoesDetail(props: ShoesDetailProps) {
       </Flex>
 
       <Button type="submit" isDisabled={isLoading} w={['full', null, 'initial']} float="right">
-        {t('add-to-bag')} {shoes ? `— ${formatCurrency.format(shoes.price)}` : ''}
+        {t('add-to-bag')} {shoes ? `— ${formatCurrency(shoes.price)}` : ''}
         <ArrowLongRightIcon ml={6} fontSize="2rem" position="relative" top="25%" />
       </Button>
     </form>
