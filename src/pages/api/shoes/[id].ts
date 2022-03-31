@@ -6,6 +6,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'A request method is not supported' })
   }
 
+  // cache for 1 week, but it can be used for an extra 1 day if the server responds with an error
+  res.setHeader('Cache-Control', 'public, max-age=604800, stale-if-error=86400')
+
   try {
     const result = await getSneakerById(req.query.id as string)
 

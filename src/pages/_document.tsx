@@ -9,13 +9,9 @@ export default class CustomDocument extends Document {
         <Head>
           <meta charSet="UTF-8" />
           <meta content="ie=edge" httpEquiv="X-UA-Compatible" />
-          <link
-            as="font"
-            crossOrigin="anonymous"
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-            rel="preload"
-            type="font/woff2"
-          />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
           {/* inject the styles first to match with the prepend: true configuration */}
           {(this.props as any).emotionStyleTags}
         </Head>

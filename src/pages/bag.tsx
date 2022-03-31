@@ -1,17 +1,14 @@
 import * as React from 'react'
-import { NextSeo } from 'next-seo'
 import { Flex, Text, Button, useToast } from '@chakra-ui/react'
 import { BagTable, BagTotal, BagIconWithBadge } from 'components/bag'
 import { Page, PageHeader } from 'components/layouts'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 import { ArrowLongRightIcon } from 'components/icons'
-import { loadStripe } from '@stripe/stripe-js'
+import { getStripe } from 'utils/get-stripe'
 import { client } from 'utils/api-client'
 import { selectBagItems } from 'store/bag'
 import { useSelector } from 'react-redux'
 import useTranslation from 'next-translate/useTranslation'
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 function ButtonPay() {
   const { t } = useTranslation('bag')
@@ -28,7 +25,7 @@ function ButtonPay() {
         data: { items }
       })
 
-      const stripe = await stripePromise
+      const stripe = await getStripe()
 
       if (stripe) {
         const result = await stripe.redirectToCheckout({ sessionId })
@@ -86,8 +83,6 @@ BagPage.getLayout = function BagLayout(page: React.ReactNode) {
 
   return (
     <Page>
-      <NextSeo title={t('title')} />
-
       <PageHeader>
         {t('title')}
         <BagIconWithBadge />

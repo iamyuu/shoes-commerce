@@ -3,14 +3,14 @@ import 'nprogress/nprogress.css'
 
 import { useEffect, ReactNode } from 'react'
 import { AppProps } from 'next/app'
-import { DefaultSeo } from 'next-seo'
+import Head from 'next/head'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import NProgress from 'nprogress'
 import { Page } from 'components/layouts'
 import { ChakraProvider } from '@chakra-ui/react'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import { store, persistor, wrapper } from 'store'
+import { store, persistor } from 'store'
 import createEmotionCache from 'utils/emotion-cache'
 import theme from 'theme'
 
@@ -75,12 +75,12 @@ function CustomApp({ Component, pageProps, router, emotionCache = clientSideEmot
 
   return (
     <CacheProvider value={emotionCache}>
-      <AllProvider>
-        <DefaultSeo title="Shoes Commerce" canonical={router.asPath} />
-        {getLayout(<Component {...pageProps} />)}
-      </AllProvider>
+      <Head>
+        <title>Shoes Commerce</title>
+      </Head>
+      <AllProvider>{getLayout(<Component {...pageProps} />)}</AllProvider>
     </CacheProvider>
   )
 }
 
-export default wrapper.withRedux(CustomApp)
+export default CustomApp
