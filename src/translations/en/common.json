@@ -1,4 +1,5 @@
 {
+  "image-not-found": "Image not found",
   "not-found": {
     "title": "Not Found",
     "message": "Sorry... nothing here. <link>Go home</link>"

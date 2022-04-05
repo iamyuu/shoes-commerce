@@ -1,10 +1,11 @@
 import * as React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import { useDispatch } from 'react-redux'
-import { useToast, useRadioGroup, HStack, Stack, Box, Flex, Heading, Text, Image, Button, Skeleton, SkeletonCircle } from '@chakra-ui/react'
+import { useToast, useRadioGroup, HStack, Stack, Box, Flex, Heading, Text, Button, Skeleton, SkeletonCircle } from '@chakra-ui/react'
 import { CheckIcon } from '@chakra-ui/icons'
 import { Radio, RadioButton } from 'components/ui/radio'
 import { ArrowLongRightIcon } from 'components/icons'
+import { ProductImage } from './product-image'
 import { formatCurrency } from 'utils/misc'
 import { useDetailShoesQuery, Color } from 'services/shoes'
 import { addOrUpdate } from 'store/bag'
@@ -97,11 +98,9 @@ export function ShoesDetail(props: ShoesDetailProps) {
 
   return (
     <form onSubmit={handleAddToBag} noValidate>
-      <Flex direction={['column', null, null, 'row']} mb={10}>
-        <Box>
-          <Skeleton isLoaded={!isLoading}>
-            <Image alt={shoes?.name} src={shoes?.image.original} objectFit="cover" mx="auto" />
-          </Skeleton>
+      <Flex direction={['column', null, null, 'row']} justify="center" mb={10}>
+        <Box width="350px" height="350px" bg="brand.gray" pos="relative" top="4.5rem">
+          <ProductImage alt={shoes?.name} src={shoes?.image} objectFit="contain" />
         </Box>
 
         <Stack

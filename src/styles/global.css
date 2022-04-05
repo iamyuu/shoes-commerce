@@ -6,6 +6,13 @@
   --colors-brand-gray: #f6f6f6;
 }
 
+img,
+video,
+iframe {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
 /* override nprogress.css */
 #nprogress .bar {
   background: var(--colors-brand-black) !important;

@@ -1,7 +1,8 @@
 import * as React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import NextLink from 'next/link'
-import { useTheme, Box, Text, AspectRatio, Image, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
+import { useTheme, Box, Text, AspectRatio, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
+import { ProductImage } from './product-image'
 import { useAllShoesQuery, Shoes } from 'services/shoes'
 import { formatCurrency } from 'utils/misc'
 
@@ -31,7 +32,7 @@ function ShoesListItem(props: Shoes) {
   const slug = props.id
 
   return (
-    <LinkBox _hover={{ textTransform: 'none' }}>
+    <LinkBox>
       <AspectRatio
         maxWidth="full"
         height="350px"
@@ -40,13 +41,13 @@ function ShoesListItem(props: Shoes) {
         bg="brand.gray"
         sx={{ '> img': { objectFit: 'contain' } }}
       >
-        <Image src={props.image.thumbnail} alt={props.name} />
+        <ProductImage src={props.image} alt={props.name} />
       </AspectRatio>
 
       <Box display="flex" mt={5}>
         <Box display="flex" flexDirection="column" flexGrow={1}>
           <NextLink href={`?shoes=${slug}`} as={`/shoes/${slug}`} scroll={false} passHref>
-            <LinkOverlay>
+            <LinkOverlay _hover={{ textDecoration: 'underline' }}>
               <Text as="span" aria-label="shoes name" fontSize={18} color={theme.colors.brand.black}>
                 {props.name}
               </Text>

@@ -3,8 +3,9 @@ import Trans from 'next-translate/Trans'
 import useTranslation from 'next-translate/useTranslation'
 import { useDispatch, useSelector } from 'react-redux'
 import type { StringOrNumber } from '@chakra-ui/utils'
-import { Box, Flex, Text, Table, Thead, Tbody, Tr, Th, Td, Image, NumberInput, NumberInputField, CloseButton } from '@chakra-ui/react'
+import { Box, Flex, Text, Table, Thead, Tbody, Tr, Th, Td, Skeleton, NumberInput, NumberInputField, CloseButton } from '@chakra-ui/react'
 import { NextChakraLink } from 'components/helpers'
+import { ProductImage } from 'components/shoes'
 import { BagIcon } from 'components/icons'
 import { formatCurrency } from 'utils/misc'
 import { remove, setQuantity, selectBagItems, selectBagCount, selectBagTotal } from 'store/bag'
@@ -123,7 +124,9 @@ function BagTablebody() {
                 />
               </Flex>
 
-              <Image w="150px" h="150px" d={['none', null, 'initial']} alt={item.name} src={item.image.thumbnail} bg="brand.gray" />
+              <Box w="150px" h="150px" d={['none', null, 'initial']} bg="brand.gray">
+                <ProductImage alt={item.name} src={item.image} />
+              </Box>
 
               <Flex flexDirection="column" justifyContent="center" alignItems="center" ml={2}>
                 <NextChakraLink href={`/shoes/${item.id}`} w="full" fontWeight={600}>
