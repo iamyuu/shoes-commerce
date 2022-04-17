@@ -2,11 +2,11 @@
 
 ## User Stories
 
-- [x] User can see list shoes
-- [x] User can see detail shoe
-- [x] User can add one or more shoe to the bag
-- [x] User can change the quantity of shoe
-- [x] User can pay the items in the bag
+-  [x] As a user, I can see a list of shoes
+-  [x] As a user, I can see detailed shoe
+-  [x] As a user, I can add one or more shoes to the bag
+-  [x] As a user, I can change the quantity of shoe
+-  [x] As a user, I can pay for the items in the bag
 
 ## Libraries
 
