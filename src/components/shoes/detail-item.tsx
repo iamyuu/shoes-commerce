@@ -132,9 +132,15 @@ export function ShoesDetail(props: ShoesDetailProps) {
                 <Skeleton h="1rem" w="80%" />
               </>
             ) : (
-              <Text aria-label="shoes description" textTransform="initial" fontSize="1rem" fontWeight="400">
-                {shoes?.description}
-              </Text>
+              <Text
+                aria-label="shoes description"
+                textTransform="initial"
+                fontSize="1rem"
+                fontWeight="400"
+                dangerouslySetInnerHTML={{
+                  __html: shoes?.description ?? ''
+                }}
+              />
             )}
           </section>
 
