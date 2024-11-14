@@ -1,7 +1,8 @@
 import * as React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import NextLink from 'next/link'
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { useInViewEffect } from 'react-hook-inview';
 import { useTheme, Center, Box, Text, AspectRatio, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
 import { ProductImage } from './product-image'
 import { useAllShoesQuery, Shoes } from 'services/shoes'
@@ -76,33 +77,67 @@ function ShoesListItem(props: Shoes) {
 }
 
 export function ShoesList() {
-	const router = useRouter()
   const { t } = useTranslation()
-  const { data, isLoading, isError, error } = useAllShoesQuery({
-    filter: {
-      gender: router.query.category as Shoes['gender']
-    }
-  })
+  const { ref, items, isEmpty, isLoading, isLoadingMore, isReachedEnd, isError, error } = useAllShoes();
 
   if (isError) {
     // @ts-expect-error
-    throw new Error(error.message || error.data.message || t('common:unknown-error'))
+    throw new Error(error?.data?.message || error.message || t('common:unknown-error'))
   }
 
-  if (isLoading || !data?.items) {
+  if (isLoading) {
     return <ShoesListFallback />
   }
 
-  const isEmpty = data.items?.length < 1
   if (isEmpty) {
     return <ShoesListEmpty />
 	}
 
   return (
     <SimpleGrid minChildWidth="250px" spacing="24px">
-      {data.items.map((shoes) => (
-        <ShoesListItem key={shoes.id} {...shoes} />
+      {items.map((shoes) => (
+        <ShoesListItem key={shoes.sku} {...shoes} />
       ))}
+
+      <div ref={ref}>
+        {!isReachedEnd && isLoadingMore && <ShoesListFallback />}
+      </div>
     </SimpleGrid>
   )
+}
+
+function useAllShoes() {
+  const router = useRouter();
+
+  const [page, setPage] = React.useState(0);
+  const ref = useInViewEffect(
+    ([entry], observer) => {
+      if (entry.isIntersecting) {
+        setPage(prev => prev + 1)
+        observer.unobserve(entry.target);
+      }
+    },
+    { threshold: 0.5 },
+  );
+
+  const { data, ...resultQuery } = useAllShoesQuery({
+    page,
+    filter: {
+      gender: router.query.category as Shoes['gender']
+    }
+  })
+
+  const items = data?.items ? [].concat(...data.items) as Shoes[] : []
+  const isEmpty = data?.items ? data?.items?.length < 1 : true
+  const isReachedEnd = data?.total === items.length
+  const isLoadingMore = page > 0 && data?.items && data?.items?.length > 0;
+
+  return {
+    ...resultQuery,
+    ref,
+    items,
+    isEmpty,
+    isReachedEnd,
+    isLoadingMore,
+  }
 }
