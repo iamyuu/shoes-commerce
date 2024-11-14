@@ -1,10 +1,18 @@
 import * as React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import NextLink from 'next/link'
-import { useTheme, Box, Text, AspectRatio, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
+import { useTheme, Center, Box, Text, AspectRatio, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
 import { ProductImage } from './product-image'
 import { useAllShoesQuery, Shoes } from 'services/shoes'
 import { formatCurrency } from 'utils/misc'
+
+function ShoesListEmpty() {
+	return (
+		<Center>
+			<Text>No shoes found</Text>
+		</Center>
+	);
+}
 
 function ShoesListFallback() {
   return (
@@ -75,14 +83,19 @@ export function ShoesList() {
     throw new Error(error.message || error.data.message || t('common:unknown-error'))
   }
 
-  if (isLoading) {
+  if (isLoading || !data?.items) {
     return <ShoesListFallback />
   }
 
+  const isEmpty = data.items?.length < 1
+  if (isEmpty) {
+    return <ShoesListEmpty />
+	}
+
   return (
     <SimpleGrid minChildWidth="250px" spacing="24px">
-      {data?.items.map((shoes, index) => (
-        <ShoesListItem key={index} {...shoes} />
+      {data?.items.map((shoes) => (
+        <ShoesListItem key={shoes.id} {...shoes} />
       ))}
     </SimpleGrid>
   )
