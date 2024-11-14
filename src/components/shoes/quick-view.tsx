@@ -11,7 +11,7 @@ export function QuickView() {
       <ModalContent maxW="65rem">
         <ModalHeader>&nbsp;</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody p='0 2rem 2rem'>
           <ShoesDetail slug={router.query.shoes as string} />
         </ModalBody>
       </ModalContent>
