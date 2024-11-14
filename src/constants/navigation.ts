@@ -16,18 +16,18 @@ export const navigationCategory = [
   },
   {
     label: 'navigation.men',
-    href: '/filter?category=men'
+    href: '/?category=men'
   },
   {
     label: 'navigation.women',
-    href: '/filter?category=women'
+    href: '/?category=women'
   },
   {
     label: 'navigation.kids',
-    href: '/filter?category=child'
+    href: '/?category=child'
   },
   {
     label: 'navigation.unisex',
-    href: '/filter?category=unisex'
+    href: '/?category=unisex'
   }
 ]

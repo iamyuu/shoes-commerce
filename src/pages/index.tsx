@@ -5,13 +5,14 @@ import { Page, PageHeader } from 'components/layouts'
 import { ShoesList } from 'components/shoes'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 
-const QuickView = dynamic<{}>(() => import('components/shoes').then(mod => mod.QuickView))
+const QuickView = dynamic(() => import('components/shoes').then(mod => mod.QuickView))
 
 export default function NewReleasePage() {
   const router = useRouter()
+  const resetErrorKeys = Object.keys(router.query)
 
   return (
-    <ErrorBoundary resetKeys={[router.query.shoes]}>
+    <ErrorBoundary resetKeys={resetErrorKeys}>
       <ShoesList />
       <QuickView />
     </ErrorBoundary>

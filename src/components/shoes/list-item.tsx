@@ -1,6 +1,7 @@
 import * as React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import NextLink from 'next/link'
+import { useRouter } from "next/router";
 import { useTheme, Center, Box, Text, AspectRatio, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
 import { ProductImage } from './product-image'
 import { useAllShoesQuery, Shoes } from 'services/shoes'
@@ -75,8 +76,13 @@ function ShoesListItem(props: Shoes) {
 }
 
 export function ShoesList() {
+	const router = useRouter()
   const { t } = useTranslation()
-  const { data, isLoading, isError, error } = useAllShoesQuery()
+  const { data, isLoading, isError, error } = useAllShoesQuery({
+    filter: {
+      gender: router.query.category as Shoes['gender']
+    }
+  })
 
   if (isError) {
     // @ts-expect-error
@@ -94,7 +100,7 @@ export function ShoesList() {
 
   return (
     <SimpleGrid minChildWidth="250px" spacing="24px">
-      {data?.items.map((shoes) => (
+      {data.items.map((shoes) => (
         <ShoesListItem key={shoes.id} {...shoes} />
       ))}
     </SimpleGrid>
