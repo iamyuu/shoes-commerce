@@ -4,13 +4,15 @@ const cache = new Map()
 
 export type Sneaker = ReturnType<typeof transformSneaker>
 
+export type Gender = 'child' | 'infant' | 'kids' | 'men' | 'PrESCHOOL' | 'toddler' | 'unisex' | 'women' | 'youth'
+
 interface SneakerResult {
   id: string
   sku: string
   brand: string
   name: string
   colorway: string
-  gender: string
+  gender: Gender
   silhouette: string
   releaseYear: string
   releaseDate: string
@@ -36,6 +38,7 @@ export interface GetSneakersOptions {
 function transformSneaker(sneaker: SneakerResult) {
   return {
     id: sneaker.id,
+    sku: sneaker.sku,
     name: sneaker.name,
     brand: sneaker.brand,
     gender: sneaker.gender,
@@ -65,7 +68,7 @@ function transformSneaker(sneaker: SneakerResult) {
   }
 }
 
-export async function getSneakers(params: GetSneakersOptions = { limit: 15 }) {
+export async function getSneakers(params: GetSneakersOptions = { limit: 25 }) {
   const qs = Object.keys(params)
     // @ts-expect-error
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
