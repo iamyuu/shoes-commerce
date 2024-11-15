@@ -5,8 +5,8 @@ import { Page, PageHeader } from 'components/layouts'
 import { ShoesList } from 'components/shoes'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 
-const QuickView = dynamic(() => import('components/shoes').then(mod => mod.QuickView))
-const ProductFilter = dynamic(() => import('components/shoes').then(mod => mod.ProductFilter))
+const QuickView = dynamic<{}>(() => import('components/shoes').then(mod => mod.QuickView))
+const ProductFilter = dynamic<{}>(() => import('components/shoes').then(mod => mod.ProductFilter))
 
 export default function ListPage() {
   const router = useRouter()

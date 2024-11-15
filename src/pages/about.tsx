@@ -9,9 +9,9 @@ export default function AboutPage() {
       {/* Generated from https://www.boom-online.co.uk/lorem-ipsum */}
       <Stack>
         <Text>
-          Until the 19th century, shoemaking was a traditional handicraft, but by the century's end, the process had been almost completely
-          mechanized, with production occurring in large factories. Despite the obvious economic gains of mass production, the factory
-          system produced shoes without the individual differentiation that the traditional shoemaker was able to provide.
+          Until the 19th century, shoemaking was a traditional handicraft, but by the century&apos;s end, the process had been almost
+          completely mechanized, with production occurring in large factories. Despite the obvious economic gains of mass production, the
+          factory system produced shoes without the individual differentiation that the traditional shoemaker was able to provide.
         </Text>
 
         <Text>
@@ -23,7 +23,7 @@ export default function AboutPage() {
 
         <Text>
           However, when the war ended in 1815, manual labour became much cheaper, and the demand for military equipment subsided. As a
-          consequence, Brunel's system was no longer profitable and it soon ceased business.
+          consequence, Brunel&apos;s system was no longer profitable and it soon ceased business.
         </Text>
 
         <Text>
@@ -33,9 +33,9 @@ export default function AboutPage() {
 
         <Text>
           In 2007, the global shoe industry had an overall market of $107.4 billion, in terms of revenue, and is expected to grow to $122.9
-          billion by the end of 2012. Shoe manufacturers in the People's Republic of China account for 63% of production, 40.5% of global
-          exports and 55% of industry revenue. However, many manufacturers in Europe dominate the higher-priced, higher value-added end of
-          the market.
+          billion by the end of 2012. Shoe manufacturers in the People&apos;s Republic of China account for 63% of production, 40.5% of
+          global exports and 55% of industry revenue. However, many manufacturers in Europe dominate the higher-priced, higher value-added
+          end of the market.
         </Text>
       </Stack>
 

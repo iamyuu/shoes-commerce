@@ -137,8 +137,16 @@ function FilterRangePrice() {
     <FormControl>
       <FormLabel>{t('filter.price.title')}</FormLabel>
       <Stack>
-        <InputPrice placeholder={t('filter.price.min')} value={minPrice ?? ''} onChange={e => setMinPrice(Number(e.target.value))} />
-        <InputPrice placeholder={t('filter.price.max')} value={maxPrice ?? ''} onChange={e => setMaxPrice(Number(e.target.value))} />
+        <InputPrice
+          placeholder={t('filter.price.min')}
+          value={minPrice ?? ''}
+          onChange={(_valueAsString, valueAsNumber) => setMinPrice(valueAsNumber)}
+        />
+        <InputPrice
+          placeholder={t('filter.price.max')}
+          value={maxPrice ?? ''}
+          onChange={(_valueAsString, valueAsNumber) => setMaxPrice(valueAsNumber)}
+        />
       </Stack>
     </FormControl>
   )
