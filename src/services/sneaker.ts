@@ -45,6 +45,7 @@ function transformSneaker(sneaker: SneakerResult) {
     price: sneaker.retailPrice,
     description: sneaker.story,
     image: sneaker.image.thumbnail,
+    // due to the API not returning the sizes, we need to hardcode them
     sizes: ['8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5'],
     // it would be great to have a way to get the colorways from the API
     colors: [

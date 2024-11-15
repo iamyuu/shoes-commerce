@@ -1,0 +1,32 @@
+{
+  "title": "Filter Products",
+  "filter": {
+    "search": "Search shoes",
+    "brand": "Brand",
+    "release-year": "Release year",
+    "price": {
+      "title": "Price",
+      "min": "Minimum price",
+      "max": "Maximum price"
+    }
+  },
+  "filter-range": {
+    "choose": "Choose filter range",
+    "gt": "Greater than",
+    "gte": "Greater than or Equal to",
+    "lt": "Less than",
+    "lte": "Less than or Equal to"
+  },
+  "sort": {
+    "price": "Sort price"
+  },
+  "sort-order": {
+    "choose": "Choose sort order",
+    "low-to-high": "Low to High",
+    "high-to-low": "High to Low"
+  },
+  "actions": {
+    "reset": "Reset",
+    "apply": "Apply"
+  }
+}

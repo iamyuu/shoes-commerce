@@ -6,6 +6,7 @@ import { ShoesList } from 'components/shoes'
 import { ErrorBoundary } from 'components/ui/error-fallback'
 
 const QuickView = dynamic(() => import('components/shoes').then(mod => mod.QuickView))
+const ProductFilter = dynamic(() => import('components/shoes').then(mod => mod.ProductFilter))
 
 export default function NewReleasePage() {
   const router = useRouter()
@@ -15,13 +16,14 @@ export default function NewReleasePage() {
     <ErrorBoundary resetKeys={resetErrorKeys}>
       <ShoesList />
       <QuickView />
+      <ProductFilter />
     </ErrorBoundary>
   )
 }
 
 NewReleasePage.getLayout = function NewReleaseLayout(page: React.ReactNode) {
-  const router = useRouter();
-  const { t } = useTranslation('layout');
+  const router = useRouter()
+  const { t } = useTranslation('layout')
 
   const titleByCategory: Record<string, string> = {
     men: t('navigation.men'),
@@ -30,7 +32,7 @@ NewReleasePage.getLayout = function NewReleaseLayout(page: React.ReactNode) {
     unisex: t('navigation.unisex')
   }
 
-  const title = titleByCategory[String(router.query.category)] || t('navigation.new-release');
+  const title = titleByCategory[String(router.query.category)] || t('navigation.new-release')
 
   return (
     <Page>

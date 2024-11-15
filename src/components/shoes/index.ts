@@ -1,4 +1,5 @@
 export * from './product-image'
+export * from './product-filter'
 export * from './list-item'
 export * from './detail-item'
 export * from './quick-view'

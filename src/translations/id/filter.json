@@ -1,0 +1,32 @@
+{
+  "title": "Filter Produk",
+  "filter": {
+    "search": "Cari sepatu",
+    "brand": "Merek",
+    "release-year": "Tahun rilis",
+    "price": {
+      "title": "Harga",
+      "min": "Harga minimum",
+      "max": "Harga maksimum"
+    }
+  },
+  "filter-range": {
+    "choose": "Pilih rentang filter",
+    "gt": "Lebih besar dari",
+    "gte": "Lebih besar dari atau sama dengan",
+    "lt": "Kurang dari",
+    "lte": "Kurang dari atau sama dengan"
+  },
+  "sort": {
+    "price": "Urutkan harga"
+  },
+  "sort-order": {
+    "choose": "Pilih urutan",
+    "low-to-high": "Rendah ke tinggi",
+    "high-to-low": "Tinggi ke rendah"
+  },
+  "actions": {
+    "reset": "Reset",
+    "apply": "Terapkan"
+  }
+}

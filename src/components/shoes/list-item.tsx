@@ -1,19 +1,17 @@
 import * as React from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import NextLink from 'next/link'
-import { useRouter } from 'next/router';
-import { useInViewEffect } from 'react-hook-inview';
 import { useTheme, Center, Box, Text, AspectRatio, SimpleGrid, Skeleton, LinkOverlay, LinkBox } from '@chakra-ui/react'
 import { ProductImage } from './product-image'
-import { useAllShoesQuery, Shoes } from 'services/shoes'
+import { useAllShoes, Shoes } from 'services/shoes'
 import { formatCurrency } from 'utils/misc'
 
 function ShoesListEmpty() {
-	return (
-		<Center>
-			<Text>No shoes found</Text>
-		</Center>
-	);
+  return (
+    <Center>
+      <Text>No shoes found</Text>
+    </Center>
+  )
 }
 
 function ShoesListFallback() {
@@ -78,7 +76,7 @@ function ShoesListItem(props: Shoes) {
 
 export function ShoesList() {
   const { t } = useTranslation()
-  const { ref, items, isEmpty, isLoading, isLoadingMore, isReachedEnd, isError, error } = useAllShoes();
+  const { bottomRef, items, isEmpty, isLoading, isLoadingMore, isReachedEnd, isError, error } = useAllShoes()
 
   if (isError) {
     // @ts-expect-error
@@ -91,53 +89,17 @@ export function ShoesList() {
 
   if (isEmpty) {
     return <ShoesListEmpty />
-	}
+  }
 
   return (
-    <SimpleGrid minChildWidth="250px" spacing="24px">
-      {items.map((shoes) => (
-        <ShoesListItem key={shoes.sku} {...shoes} />
-      ))}
+    <>
+      <SimpleGrid minChildWidth="250px" spacing="24px">
+        {items.map(shoes => (
+          <ShoesListItem key={shoes.sku} {...shoes} />
+        ))}
+      </SimpleGrid>
 
-      <div ref={ref}>
-        {!isReachedEnd && isLoadingMore && <ShoesListFallback />}
-      </div>
-    </SimpleGrid>
+      <div ref={bottomRef}>{!isReachedEnd && isLoadingMore ? <ShoesListFallback /> : null}</div>
+    </>
   )
-}
-
-function useAllShoes() {
-  const router = useRouter();
-
-  const [page, setPage] = React.useState(0);
-  const ref = useInViewEffect(
-    ([entry], observer) => {
-      if (entry.isIntersecting) {
-        setPage(prev => prev + 1)
-        observer.unobserve(entry.target);
-      }
-    },
-    { threshold: 0.5 },
-  );
-
-  const { data, ...resultQuery } = useAllShoesQuery({
-    page,
-    filter: {
-      gender: router.query.category as Shoes['gender']
-    }
-  })
-
-  const items = data?.items ? [].concat(...data.items) as Shoes[] : []
-  const isEmpty = data?.items ? data?.items?.length < 1 : true
-  const isReachedEnd = data?.total === items.length
-  const isLoadingMore = page > 0 && data?.items && data?.items?.length > 0;
-
-  return {
-    ...resultQuery,
-    ref,
-    items,
-    isEmpty,
-    isReachedEnd,
-    isLoadingMore,
-  }
 }
