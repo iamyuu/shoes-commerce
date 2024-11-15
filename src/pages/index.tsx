@@ -20,11 +20,21 @@ export default function NewReleasePage() {
 }
 
 NewReleasePage.getLayout = function NewReleaseLayout(page: React.ReactNode) {
-  const { t } = useTranslation('new-release')
+  const router = useRouter();
+  const { t } = useTranslation('layout');
+
+  const titleByCategory: Record<string, string> = {
+    men: t('navigation.men'),
+    women: t('navigation.women'),
+    child: t('navigation.kids'),
+    unisex: t('navigation.unisex')
+  }
+
+  const title = titleByCategory[String(router.query.category)] || t('navigation.new-release');
 
   return (
     <Page>
-      <PageHeader>{t('title')}</PageHeader>
+      <PageHeader>{title}</PageHeader>
 
       {page}
     </Page>
