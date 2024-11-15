@@ -8,7 +8,7 @@ import { ErrorBoundary } from 'components/ui/error-fallback'
 const QuickView = dynamic(() => import('components/shoes').then(mod => mod.QuickView))
 const ProductFilter = dynamic(() => import('components/shoes').then(mod => mod.ProductFilter))
 
-export default function NewReleasePage() {
+export default function ListPage() {
   const router = useRouter()
   const resetErrorKeys = Object.keys(router.query)
 
@@ -21,7 +21,7 @@ export default function NewReleasePage() {
   )
 }
 
-NewReleasePage.getLayout = function NewReleaseLayout(page: React.ReactNode) {
+ListPage.getLayout = function ListLayout(page: React.ReactNode) {
   const router = useRouter()
   const { t } = useTranslation('layout')
 
