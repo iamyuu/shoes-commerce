@@ -5,6 +5,12 @@ import { Sneaker, Gender } from './sneaker'
 export type Shoes = Sneaker
 export type Color = Sneaker['colors'][0]
 
+/**
+ * lt – less than
+ * gt – greater than
+ * lte – less than or equal to
+ * gte – greater than or equal to
+ */
 type FilterRange = 'lt' | 'gt' | 'lte' | 'gte'
 type ShoesParams = {
   page: number
@@ -19,15 +25,8 @@ type ShoesParams = {
       min?: number
       max?: number
     }
-    /**
-     * lt – less than
-     * gt – greater than
-     * lte – less than or equal to
-     * gte – greater than or equal to
-     *
-     * Format: YYYY-MM-DD
-     */
-    releaseYear: `${FilterRange}:${string}`
+    releaseYear: string // YYYY-MM-DD
+    releaseYearIndicator: FilterRange
   }>
 }
 
@@ -37,7 +36,7 @@ export const shoesApi = createApi({
   baseQuery: rtkClient,
   endpoints: build => ({
     allShoes: build.query<{ total: number; items: Shoes[] }, Partial<ShoesParams> | void>({
-      query: ({ page = 0, limit = 25, filter, sortBy, sortOrder = 'asc' } = {}) => {
+      query: ({ page = 0, limit = 20, filter, sortBy, sortOrder = 'asc' } = {}) => {
         const qs = new URLSearchParams()
 
         if (page) {
@@ -53,7 +52,7 @@ export const shoesApi = createApi({
         }
 
         if (filter?.brand) {
-          qs.set('brand', filter.brand)
+          qs.set('brand', filter.brand.toLowerCase())
         }
 
         if (filter?.gender) {
@@ -61,7 +60,7 @@ export const shoesApi = createApi({
         }
 
         if (filter?.releaseYear) {
-          qs.set('releaseYear', filter.releaseYear)
+          qs.set('releaseYear', `${filter.releaseYearIndicator || 'lte'}:${filter.releaseYear}`)
         }
 
         const sort = sortBy ? `${sortBy}:${sortOrder}` : ''
@@ -102,8 +101,11 @@ export const shoesApi = createApi({
     }),
     detailShoes: build.query<Shoes, string>({
       query: id => `/shoes/${id}`
+    }),
+    allBrands: build.query<string[], void>({
+      query: () => '/brands',
     })
   })
 })
 
-export const { useAllShoesQuery, useDetailShoesQuery } = shoesApi
+export const { useAllShoesQuery, useDetailShoesQuery, useAllBrandsQuery } = shoesApi
