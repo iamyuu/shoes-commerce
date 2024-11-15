@@ -7,12 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest --coverage",
-    "test:watch": "jest --watchAll",
     "format": "prettier --write .",
     "lint": "next lint",
-    "type-check": "tsc --pretty --noEmit",
-    "validate": "npm run lint && npm run type-check && npm run test"
+    "type-check": "tsc --pretty --noEmit"
   },
   "dependencies": {
     "@chakra-ui/icons": "1.1.7",
@@ -38,19 +35,12 @@
     "stripe": "8.210.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "16.2",
-    "@commitlint/config-conventional": "16.2",
-    "@testing-library/jest-dom": "5.16.2",
-    "@testing-library/react": "12.1.4",
-    "@testing-library/user-event": "13.5.0",
-    "@types/jest": "27.4.1",
     "@types/node": "17.0.21",
     "@types/nprogress": "0.2.0",
     "@types/react": "17.0.40",
     "eslint": "8.11",
     "eslint-config-next": "12.1",
     "husky": "7.0",
-    "jest": "27.5.1",
     "lint-staged": "12.3",
     "msw": "0.39.2",
     "prettier": "2.6",
