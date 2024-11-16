@@ -106,7 +106,7 @@ export const shoesApi = createApi({
       query: id => `/shoes/${id}`
     }),
     allBrand: build.query<string[], void>({
-      query: () => '/brands'
+      query: () => '/brand'
     })
   })
 })

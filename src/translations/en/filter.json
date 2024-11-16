@@ -28,5 +28,9 @@
   "actions": {
     "reset": "Reset",
     "apply": "Apply"
+  },
+  "placeholder": {
+    "search": "Search shoes...",
+    "brand": "Choose brand"
   }
 }

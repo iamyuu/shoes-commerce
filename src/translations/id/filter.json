@@ -28,5 +28,9 @@
   "actions": {
     "reset": "Reset",
     "apply": "Terapkan"
+  },
+  "placeholder": {
+    "search": "Cari sepatu...",
+    "brand": "Pilih merek"
   }
 }

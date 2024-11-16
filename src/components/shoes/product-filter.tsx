@@ -32,6 +32,7 @@ import {
 } from '@chakra-ui/react'
 import { FilterIcon } from 'components/icons'
 import { useAllBrandQuery } from 'services/shoes'
+import { capitalize } from 'utils/misc'
 
 function FilterInputSearch() {
   const { t } = useTranslation('filter')
@@ -40,7 +41,7 @@ function FilterInputSearch() {
   return (
     <FormControl>
       <FormLabel>{t('filter.search')}</FormLabel>
-      <Input placeholder={`${t('filter.search')}...`} value={name ?? ''} onChange={e => setName(e.target.value)} />
+      <Input placeholder={t('placeholder.search')} value={name ?? ''} onChange={e => setName(e.target.value)} />
     </FormControl>
   )
 }
@@ -58,9 +59,12 @@ function FilterSelectBrand() {
     <FormControl>
       <FormLabel>{t('filter.brand')}</FormLabel>
       <Select value={brand ?? ''} isDisabled={isLoading} onChange={e => setBrand(e.target.value)}>
+        <option disabled value="">
+          {t('placeholder.brand')}
+        </option>
         {brands?.map(brand => (
           <option key={brand} value={brand}>
-            {brand}
+            {capitalize(brand)}
           </option>
         ))}
       </Select>
