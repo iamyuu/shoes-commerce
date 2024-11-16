@@ -32,16 +32,18 @@ import {
 } from '@chakra-ui/react'
 import { FilterIcon } from 'components/icons'
 import { useAllBrandQuery } from 'services/shoes'
+import { useDebounceFn } from 'utils/hooks'
 import { capitalize } from 'utils/misc'
 
 function FilterInputSearch() {
   const { t } = useTranslation('filter')
   const [name, setName] = useQueryState('q', queryTypes.string)
+  const updateName = useDebounceFn<string | null>(val => setName(val))
 
   return (
     <FormControl>
       <FormLabel>{t('filter.search')}</FormLabel>
-      <Input placeholder={t('placeholder.search')} value={name ?? ''} onChange={e => setName(e.target.value)} />
+      <Input placeholder={t('placeholder.search')} defaultValue={name ?? ''} onChange={e => updateName(e.target.value)} />
     </FormControl>
   )
 }
@@ -80,13 +82,12 @@ function FilterSelectReleaseYear() {
   const [releaseYear, setReleaseYear] = useQueryState('releaseYear', queryTypes.string)
   const [initialFilter, year] = releaseYear?.split('_') || []
   const [filterRange, setFilterRange] = React.useState(initialFilter)
+  const updateReleaseYear = useDebounceFn((year: string | null) => setReleaseYear(year ? `${filterRange}_${year}` : null))
 
   React.useEffect(() => {
-    if (year) {
-      setReleaseYear(`${filterRange}_${year}`)
-    }
+    updateReleaseYear(year)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterRange, year])
+  }, [year])
 
   return (
     <FormControl>
@@ -107,8 +108,8 @@ function FilterSelectReleaseYear() {
           width="36"
           min={1900}
           max={currentYear}
-          value={year}
-          onChange={valueAsString => setReleaseYear(valueAsString ? `${filterRange}_${valueAsString}` : null)}
+          defaultValue={year}
+          onChange={valueAsString => updateReleaseYear(valueAsString)}
         >
           <NumberInputField placeholder={`${currentYear}`} />
           <NumberInputStepper>
@@ -136,6 +137,8 @@ function FilterRangePrice() {
   const { t } = useTranslation('filter')
   const [minPrice, setMinPrice] = useQueryState('min_price', queryTypes.integer)
   const [maxPrice, setMaxPrice] = useQueryState('max_price', queryTypes.integer)
+  const updateMinPrice = useDebounceFn<number | null>(val => setMinPrice(val ?? null))
+  const updateMaxPrice = useDebounceFn<number | null>(val => setMaxPrice(val ?? null))
 
   return (
     <FormControl>
@@ -143,13 +146,13 @@ function FilterRangePrice() {
       <Stack>
         <InputPrice
           placeholder={t('filter.price.min')}
-          value={minPrice ?? ''}
-          onChange={(_valueAsString, valueAsNumber) => setMinPrice(valueAsNumber)}
+          defaultValue={minPrice ?? ''}
+          onChange={(_valueAsString, valueAsNumber) => updateMinPrice(valueAsNumber)}
         />
         <InputPrice
           placeholder={t('filter.price.max')}
-          value={maxPrice ?? ''}
-          onChange={(_valueAsString, valueAsNumber) => setMaxPrice(valueAsNumber)}
+          defaultValue={maxPrice ?? ''}
+          onChange={(_valueAsString, valueAsNumber) => updateMaxPrice(valueAsNumber)}
         />
       </Stack>
     </FormControl>
